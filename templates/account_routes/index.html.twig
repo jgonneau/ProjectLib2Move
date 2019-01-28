@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bonjour dans votre espace {{ username }}!{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .content_video {
+        width: 300px;
+        height: 150px;
+        margin: 20px;
+    }
+
+    .titre_videos {
+        width: 300px;
+        overflow: hidden;
+    }
+
+    .desc_videos {
+        width: 100%;
+        height: 100px;
+        overflow: auto;
+    }
+
+    h6 {
+        font-weight: bolder;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="content_page">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">YouFLix</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
+            <ul class="navbar-nav">
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item"><a class="nav-link" href="{{ path("secur_admin_dashboard") }}">Espace admin</a></li>
+                {% endif %}
+                <li class="nav-item" ><a class="nav-link" href="{{ path("edition_profil_user") }}">Editer son profil</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{{ path("add_video_user") }}">Ajouter une vidéo</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{{ path("logout") }}" >Déconnexion</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<h5 class="text-primary navbar-brand">Bonjour {{ username }} ( {{ email }} )! </h5>
+<br/>
+<p class="badge badge-primary" style="margin-left:20px;">Voici vos videos :</p>
+    <div id="content_videos_gallery">
+        <hr>
+        <div id="videos_user" class="d-flex justify-content-start">
+            <!-- Enumeration de chaque video de l'utilisateur de maniere à creer une galerie -->
+        {%  for video in videos_user %}
+
+                <div class="content_video" >
+                <div >
+                    <iframe width="280" height="157" src=" {{  video.url | replace({'watch?v=': 'embed/'})  ~ '?rel=0&showinfo=0' }} " frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                </div>
+                <div class="d-inline-flex justify-content-around flex-column align-items-stretch">
+                    <div class="d-flex justify-content-around"> <a href="{{ path('edit_video_user') }}?v_id={{ video.id }}"><button class="btn btn-primary">Editer</button></a>  <a href="{{ path('delete_video_user') }}?v_id={{ video.id }}"><button class="btn btn-primary">Supprimer</button></a></div>
+                    <div><h4 class="titre_videos text-primary">{{ video.title }} </h4></div>
+                    <br><div><p class="desc_videos text-muted">{{ video.description }}</p></div>
+
+                </div>
+            </div>
+
+
+        {%  endfor %}
+        </div>
+
+
+{% endblock %}

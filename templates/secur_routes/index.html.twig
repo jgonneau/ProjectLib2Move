@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form_enreg 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Bienvenue sur Toutou canin !{% endblock %}
+
+{% block body %}
+
+
+
+            <div class="content_page">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                    <a class="navbar-brand" href="#">Toutou canin</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('secur_connexion') }}">Connexion</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+
+
+    <div id="main_content" class="d-flex flex-column h-100">
+        <div class="d-flex justify-content-center p-2" style="border:solid 2px gray">
+            <div class="p-3 bg-primary text-white d-flex justify-content-around flex-column">
+                <div>
+                    <h2 class="text-left">Bienvenue sur la page de Toutou canin !<br>Ici vous pouvez demander des services pour vos chiens, rechercher des dogs sitters pour les surveiller <br> et bien plus encore.. !</h2>
+                </div>
+            </div>
+            <div class="p-3 content_page">
+
+                <div id="form_inscription">
+
+                    {{ form_start(form_enreg) }}
+                    <p class="badge badge-primary">  Inscrivez-vous sur Toutou cannin dès maintenant !  </p>
+                    {{ form_row(form_enreg.nickname) }}
+                    {{ form_row(form_enreg.email) }}
+                    {{ form_row(form_enreg.birthday) }}
+                    {{ form_row(form_enreg.password.first) }}
+                    {{ form_row(form_enreg.password.second) }}
+                    {{ form_end(form_enreg) }}
+                </div>
+            </div>
+        </div>
+
+
+            <div class="p-2 content_page row justify-content-between" ></div>
+    </div>
+
+
+
+{% endblock %}

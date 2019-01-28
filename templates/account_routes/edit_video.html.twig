@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form_video 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Edition video : {{ video_to_edit.title }}{% endblock %}
+
+{% block body %}
+
+    <div class="content_page">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">YouFLix</a>
+           
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('home') }}"> &lt; Retour</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    
+    <h3 class="text-primary navbar-brand">Edition de la vidéo : " {{ video_to_edit.title }} " !</h3>
+    {{ form_start(form_video) }}
+    {{ form_row(form_video.url) }}
+    {{ form_row(form_video.title) }}
+    {{ form_row(form_video.description) }}
+    {{ form_end(form_video) }}
+
+{% endblock %}

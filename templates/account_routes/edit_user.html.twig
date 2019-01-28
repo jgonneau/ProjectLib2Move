@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form_user 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Modification information utilisateur : {{ user.nickname }}{% endblock %}
+
+{% block body %}
+
+    <div class="content_page">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">YouFLix</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('home') }}"> &lt; Retour</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <h3 class="text-primary navbar-brand">Modification infos de : {{ user.nickname }} ({{ user.email }})</h3>
+    {% else %}
+        <h3 class="text-primary navbar-brand">Edition des informations de votre profil !</h3>
+    {% endif %}
+
+    {{ form_start(form_user) }}
+    {{ form_row(form_user.nickname) }}
+    {{ form_row(form_user.email) }}
+    {{ form_row(form_user.birthday) }}
+    {{ form_end(form_user) }}
+
+{% endblock %}

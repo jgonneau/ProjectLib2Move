@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Espace Admin !{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .content_video {
+            width: 300px;
+            height: 150px;
+            margin: 20px;
+        }
+
+        .titre_videos {
+            width: 300px;
+            overflow: hidden;
+        }
+
+        .desc_videos {
+            width: 100%;
+            height: 100px;
+            overflow: auto;
+        }
+
+        .block_user_videos {
+            margin-bottom: 300px;
+        }
+
+        h2, h3 {
+            padding-left: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="content_page">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">YouFLix</a>
+            <h2 class="text-white">- Espace ADMIN -</h2>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('home') }}"> &lt; Retour à l'espace videos</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    {% if users | length > 0 %}
+        <br/>
+        <h2 class="text-primary">Galerie des videos d'utilisateurs :</h2>
+
+        <!-- Enumeration des utilisateurs, et non des admins-->
+        {%  for user in users if not ('ROLE_ADMIN' in user.roles) %}
+            <hr>
+        <div class="block_user_videos">
+            <h3 class="text-primary"> | {{ user.nickname }} ({{ user.email }}) <a href="{{ path('edit_info_user_by_admin') }}/{{ user.id }}" ><button class="btn btn-primary">Editer les infos du compte</button></a>
+            </h3>
+            <div class="d-flex justify-content-start">
+
+                <!-- Enumeration de chaque video dans la galerie utilisateur -->
+                {% for user_video in videos if user_video.iduser.id == user.id %}
+                    <div class="content_video">
+                        <div> <iframe width="280" height="157" src=" {{ user_video.url | replace({'watch?v=': 'embed/'})  ~ '?rel=0&showinfo=0' }} " frameborder="0" allow="encrypted-media" allowfullscreen></iframe></div>
+                    <div class="d-inline-flex justify-content-around flex-column align-items-stretch" >
+                        <div class="d-flex justify-content-around" >  <a href="{{ path('edit_video_user_by_admin') }}/{{ user.id }}/{{ user_video.id }}" ><button class="btn btn-primary">Editer la vidéo</button></a>
+                        <a href="{{ path('delete_video_user_by_admin') }}/{{ user.id }}/{{ user_video.id }}" ><button class="btn btn-primary">Supprimer la vidéo</button></a> </div>
+                        <div><h4 class="titre_videos text-primary" >{{ user_video.title }}</h4></div>
+                        <br><div><p class="desc_videos text-muted" >{{ user_video.description }}</p></div>
+                    </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+            <p>Aucun utilisateur trouvé !</p>
+        {% endfor %}
+
+    {% else %}
+        <p>Il n'y a aucun utilisateur dans la base de données.</p>
+    {% endif %}
+
+{% endblock %}
