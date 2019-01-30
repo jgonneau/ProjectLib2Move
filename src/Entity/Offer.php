@@ -49,7 +49,7 @@ class Offer
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $userCreat;
+    private $createdBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -59,7 +59,7 @@ class Offer
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userModified;
+    private $modifiedBy;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="offers")
@@ -143,14 +143,14 @@ class Offer
         return $this;
     }
 
-    public function getUserCreat(): ?string
+    public function getCreatedBy(): ?string
     {
-        return $this->userCreat;
+        return $this->createdBy;
     }
 
-    public function setUserCreat(string $userCreat): self
+    public function setCreatedBy(string $createdBy): self
     {
-        $this->userCreat = $userCreat;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
@@ -167,14 +167,14 @@ class Offer
         return $this;
     }
 
-    public function getUserModified(): ?string
+    public function getModifiedBy(): ?string
     {
-        return $this->userModified;
+        return $this->modifiedBy;
     }
 
-    public function setUserModified(?string $userModified): self
+    public function setModifiedBy(?string $modifiedBy): self
     {
-        $this->userModified = $userModified;
+        $this->modifiedBy = $modifiedBy;
 
         return $this;
     }

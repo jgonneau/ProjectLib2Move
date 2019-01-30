@@ -36,7 +36,7 @@ class AccessRole
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userCreate;
+    private $createdBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -99,14 +99,14 @@ class AccessRole
         return $this;
     }
 
-    public function getUserCreate(): ?string
+    public function getCreateBy(): ?string
     {
-        return $this->userCreate;
+        return $this->createdBy;
     }
 
-    public function setUserCreate(?string $userCreate): self
+    public function setCreateBy(?string $createBy): self
     {
-        $this->userCreate = $userCreate;
+        $this->createdBy = $createBy;
 
         return $this;
     }

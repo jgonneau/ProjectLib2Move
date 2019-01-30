@@ -46,7 +46,7 @@ class Role
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $modifiedUser;
+    private $createdBy;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\AccessRole", mappedBy="role")
@@ -123,14 +123,14 @@ class Role
         return $this;
     }
 
-    public function getModifiedUser(): ?string
+    public function getCreatedBy(): ?string
     {
-        return $this->modifiedUser;
+        return $this->createdBy;
     }
 
-    public function setModifiedUser(?string $modifiedUser): self
+    public function setCreatedBy(?string $createdBy): self
     {
-        $this->modifiedUser = $modifiedUser;
+        $this->createdBy = $createdBy;
 
         return $this;
     }

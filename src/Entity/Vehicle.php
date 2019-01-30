@@ -71,7 +71,7 @@ class Vehicle
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $userCreated;
+    private $createdBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -81,7 +81,7 @@ class Vehicle
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $modifiedUser;
+    private $modifiedBy;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="vehicle")
@@ -218,14 +218,14 @@ class Vehicle
         return $this;
     }
 
-    public function getUserCreated(): ?string
+    public function getCreatedBy(): ?string
     {
-        return $this->userCreated;
+        return $this->createdBy;
     }
 
-    public function setUserCreated(?string $userCreated): self
+    public function setCreatedBy(?string $createdBy): self
     {
-        $this->userCreated = $userCreated;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
@@ -242,14 +242,14 @@ class Vehicle
         return $this;
     }
 
-    public function getModifiedUser(): ?string
+    public function getModifiedBy(): ?string
     {
-        return $this->modifiedUser;
+        return $this->modifiedBy;
     }
 
-    public function setModifiedUser(?string $modifiedUser): self
+    public function setModifiedUser(?string $modifiedBy): self
     {
-        $this->modifiedUser = $modifiedUser;
+        $this->modifiedBy = $modifiedBy;
 
         return $this;
     }

@@ -48,6 +48,26 @@ class User
      */
     private $bills;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $birthday;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $licenceNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $document;
+
     public function __construct()
     {
         $this->userRoles = new ArrayCollection();
@@ -205,6 +225,54 @@ class User
                 $bill->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getLicenceNumber(): ?string
+    {
+        return $this->licenceNumber;
+    }
+
+    public function setLicenceNumber(string $licenceNumber): self
+    {
+        $this->licenceNumber = $licenceNumber;
+
+        return $this;
+    }
+
+    public function getDocument(): ?string
+    {
+        return $this->document;
+    }
+
+    public function setDocument(?string $document): self
+    {
+        $this->document = $document;
 
         return $this;
     }
