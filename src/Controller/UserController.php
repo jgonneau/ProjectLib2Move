@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\UserRole;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -27,16 +30,31 @@ class UserController extends AbstractController
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
+        $userRole = new UserRole();
+        $role = new Role();
+
+        $role->setNomRole('ROLE_USER');
+        $userRole->setRole($role);
+        $userRole->setUser($user);
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $hash_password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash_password);
+            $user->setRoles(['ROLE_USER']);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($userRole);
+            $entityManager->persist($role);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');

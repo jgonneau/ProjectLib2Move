@@ -53,9 +53,14 @@ class Role
      */
     private $accessRoles;
 
+    /**
+     * Role constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
         $this->accessRoles = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
