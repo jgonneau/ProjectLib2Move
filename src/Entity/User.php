@@ -68,6 +68,11 @@ class User
      */
     private $document;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
     public function __construct()
     {
         $this->userRoles = new ArrayCollection();
@@ -273,6 +278,18 @@ class User
     public function setDocument(?string $document): self
     {
         $this->document = $document;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
