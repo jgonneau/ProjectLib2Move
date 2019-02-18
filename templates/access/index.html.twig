@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccessController!{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+    <h1>Lib2Move !</h1>
+    <br>
+    {% if (error != null) %}
+        <p class="text-warning">{{ error }}</p>
+    {% endif %}
+    <a href="{{ path('login') }}">Login</a><br>
+    <a href="{{ path('admin') }}">admin</a><br>
+    <a href="{{ path('admin_dashboard') }}">Dashboard admin</a><br>
+
+</div>
+{% endblock %}

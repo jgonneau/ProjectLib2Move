@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppCreateAdminCommand extends Command
 {
-    protected static $defaultName = 'app:create-admin';
+    protected static $defaultName = 'app:create-admino';
     private $entityManager;
     private $encoder;
 

@@ -41,6 +41,9 @@ class UserController extends AbstractController
         $role = new Role();
 
         $role->setNomRole('ROLE_USER');
+
+        ///
+
         $userRole->setRole($role);
         $userRole->setUser($user);
 
@@ -54,7 +57,6 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->persist($userRole);
-            $entityManager->persist($role);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');
