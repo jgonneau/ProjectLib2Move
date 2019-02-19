@@ -36,12 +36,16 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $user = new User();
         $userRole = new UserRole();
-        $role = new Role();
+        //$role = new Role();
 
-        $role->setNomRole('ROLE_USER');
-        $userRole->setRole($role);
+        //$role->setNomRole('ROLE_USER');
+        $roleName = 'ROLE_USER';
+        $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
+        //dump($role);die();
+        $userRole->addRole($role);
         $userRole->setUser($user);
 
         $form = $this->createForm(UserType::class, $user);
@@ -51,10 +55,9 @@ class UserController extends AbstractController
             $hash_password = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash_password);
             $user->setRoles(['ROLE_USER']);
-            $entityManager = $this->getDoctrine()->getManager();
+            $user->addUserRole($userRole);
             $entityManager->persist($user);
             $entityManager->persist($userRole);
-            $entityManager->persist($role);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');

@@ -54,6 +54,11 @@ class Role
     private $accessRoles;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserRole", inversedBy="role")
+     */
+    private $userRole;
+
+    /**
      * Role constructor.
      * @throws \Exception
      */
@@ -164,6 +169,18 @@ class Role
             $this->accessRoles->removeElement($accessRole);
             $accessRole->removeRole($this);
         }
+
+        return $this;
+    }
+
+    public function getUserRole(): ?UserRole
+    {
+        return $this->userRole;
+    }
+
+    public function setUserRole(?UserRole $userRole): self
+    {
+        $this->userRole = $userRole;
 
         return $this;
     }
