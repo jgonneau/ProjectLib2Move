@@ -46,6 +46,11 @@ class UserController extends AbstractController
         $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
         //dump($role);die();
         $userRole->addRole($role);
+        $role->setNomRole('ROLE_USER');
+
+        ///
+
+        $userRole->setRole($role);
         $userRole->setUser($user);
 
         $form = $this->createForm(UserType::class, $user);
