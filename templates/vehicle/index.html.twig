@@ -22,6 +22,8 @@
                 <th>CreatedBy</th>
                 <th>ModifiedAt</th>
                 <th>ModifiedBy</th>
+                <th>Picture</th>
+                <th>Gallery</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -42,6 +44,8 @@
                 <td>{{ vehicle.createdBy }}</td>
                 <td>{{ vehicle.modifiedAt ? vehicle.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ vehicle.modifiedBy }}</td>
+                <td>{{ vehicle.picture }}</td>
+                <td>{{ vehicle.gallery }}</td>
                 <td>
                     <a href="{{ path('vehicle_show', {'id': vehicle.id}) }}">show</a>
                     <a href="{{ path('vehicle_edit', {'id': vehicle.id}) }}">edit</a>
@@ -49,7 +53,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="15">no records found</td>
+                <td colspan="17">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

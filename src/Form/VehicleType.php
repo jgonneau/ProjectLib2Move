@@ -25,6 +25,8 @@ class VehicleType extends AbstractType
             ->add('createdBy')
             ->add('modifiedAt')
             ->add('modifiedBy')
+            ->add('picture')
+            ->add('gallery')
         ;
     }
 

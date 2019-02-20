@@ -88,6 +88,16 @@ class Vehicle
      */
     private $offers;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gallery;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -281,6 +291,30 @@ class Vehicle
                 $offer->setVehicle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getGallery(): ?string
+    {
+        return $this->gallery;
+    }
+
+    public function setGallery(?string $gallery): self
+    {
+        $this->gallery = $gallery;
 
         return $this;
     }
