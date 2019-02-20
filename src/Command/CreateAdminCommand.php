@@ -51,9 +51,17 @@ class CreateAdminCommand extends Command
         //Initialisation administrateur
         $user = new User();
         $userRole = new UserRole();
-        $role = new Role();
+        $roleName = 'ROLE_ADMIN';
+        $role = $this->entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
 
-        $role->setNomRole('ROLE_ADMIN');
+        if(!$role){
+
+            $role = new Role();
+            $role->setNomRole('ROLE_ADMIN');
+
+        }
+
+        //$role->setNomRole('ROLE_ADMIN');
         $userRole->setRole($role);
         $userRole->setUser($user);
 

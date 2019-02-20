@@ -24,14 +24,10 @@ class UserRole
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Role", mappedBy="userRole")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="userRole")
      */
     private $role;
 
-    public function __construct()
-    {
-        $this->role = new ArrayCollection();
-    }
 
 
 
@@ -52,36 +48,19 @@ class UserRole
         return $this;
     }
 
-    /**
-     * @return Collection|Role[]
-     */
-    public function getRole(): Collection
+    public function getRole(): ?Role
     {
         return $this->role;
     }
 
-    public function addRole(Role $role): self
+    public function setRole(?Role $role): self
     {
-        if (!$this->role->contains($role)) {
-            $this->role[] = $role;
-            $role->setUserRole($this);
-        }
+        $this->role = $role;
 
         return $this;
     }
 
-    public function removeRole(Role $role): self
-    {
-        if ($this->role->contains($role)) {
-            $this->role->removeElement($role);
-            // set the owning side to null (unless already changed)
-            if ($role->getUserRole() === $this) {
-                $role->setUserRole(null);
-            }
-        }
 
-        return $this;
-    }
 
 
 }

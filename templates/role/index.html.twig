@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Role index{% endblock %}
+
+{% block body %}
+    <h1>Role index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomRole</th>
+                <th>DescriptionRole</th>
+                <th>CreatedAt</th>
+                <th>ModifiedBy</th>
+                <th>ModifiedAt</th>
+                <th>CreatedBy</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for role in roles %}
+            <tr>
+                <td>{{ role.id }}</td>
+                <td>{{ role.nomRole }}</td>
+                <td>{{ role.descriptionRole }}</td>
+                <td>{{ role.createdAt ? role.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ role.modifiedBy }}</td>
+                <td>{{ role.modifiedAt ? role.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ role.createdBy }}</td>
+                <td>
+                    <a href="{{ path('role_show', {'id': role.id}) }}">show</a>
+                    <a href="{{ path('role_edit', {'id': role.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('role_new') }}">Create new</a>
+{% endblock %}
