@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vehicle index{% endblock %}
+
+{% block body %}
+    <h1>Vehicle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TypeOfVehicle</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>SerialNumber</th>
+                <th>Color</th>
+                <th>Numberplate</th>
+                <th>Kilometers</th>
+                <th>DateOfPurchase</th>
+                <th>BuyingPrice</th>
+                <th>CreatedAt</th>
+                <th>CreatedBy</th>
+                <th>ModifiedAt</th>
+                <th>ModifiedBy</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicle in vehicles %}
+            <tr>
+                <td>{{ vehicle.id }}</td>
+                <td>{{ vehicle.typeOfVehicle }}</td>
+                <td>{{ vehicle.brand }}</td>
+                <td>{{ vehicle.model }}</td>
+                <td>{{ vehicle.serialNumber }}</td>
+                <td>{{ vehicle.color }}</td>
+                <td>{{ vehicle.numberplate }}</td>
+                <td>{{ vehicle.kilometers }}</td>
+                <td>{{ vehicle.dateOfPurchase ? vehicle.dateOfPurchase|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ vehicle.buyingPrice }}</td>
+                <td>{{ vehicle.createdAt ? vehicle.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ vehicle.createdBy }}</td>
+                <td>{{ vehicle.modifiedAt ? vehicle.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ vehicle.modifiedBy }}</td>
+                <td>
+                    <a href="{{ path('vehicle_show', {'id': vehicle.id}) }}">show</a>
+                    <a href="{{ path('vehicle_edit', {'id': vehicle.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('vehicle_new') }}">Create new</a>
+{% endblock %}
