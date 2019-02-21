@@ -33,7 +33,7 @@ security:
                 password_parameter: "login_user[password]"
 
             logout:
-                path: /deconnexion
+                path: /logout
                 target: /
 
 
