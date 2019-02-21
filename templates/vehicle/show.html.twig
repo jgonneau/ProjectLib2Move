@@ -74,6 +74,7 @@
         </tbody>
     </table>
 
+    <img src="{{asset('uploads/'~vehicle.picture) }}">
     <a href="{{ path('vehicle_index') }}">back to list</a>
 
     <a href="{{ path('vehicle_edit', {'id': vehicle.id}) }}">edit</a>

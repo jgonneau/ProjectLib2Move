@@ -101,6 +101,7 @@ class Vehicle
     public function __construct()
     {
         $this->offers = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

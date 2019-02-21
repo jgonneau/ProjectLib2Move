@@ -15,6 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class VehicleController extends AbstractController
 {
+    public function generateUniqueFileName()
+    {
+        return md5(uniqid());
+    }
     /**
      * @Route("/", name="vehicle_index", methods={"GET"})
      */
@@ -33,9 +37,19 @@ class VehicleController extends AbstractController
         $vehicle = new Vehicle();
         $form = $this->createForm(VehicleType::class, $vehicle);
         $form->handleRequest($request);
+        $vehicle->setCreatedBy($this->getUser()->getFirstname());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $file = $form->get('picture')->getData();
+            if ($file) {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                $file->move(
+                    $this->getParameter('image_directory'),
+                    $fileName
+                );
+                $vehicle->setPicture($fileName);
+            }
             $entityManager->persist($vehicle);
             $entityManager->flush();
 
@@ -67,6 +81,20 @@ class VehicleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('picture')->getData();
+            if ($file) {
+                if ($vehicle->getPicture())  {
+                    if (is_file($this->getParameter('image_directory').'/'.$vehicle->getPicture())) {
+                        unlink($this->getParameter('image_directory').'/'.$vehicle->getPicture());
+                    }
+                }
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                $file->move(
+                    $this->getParameter('image_directory'),
+                    $fileName
+                );
+                $vehicle->setPicture($fileName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('vehicle_index', [
