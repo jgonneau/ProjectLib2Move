@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\SubTypeOfVehicle;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use App\Repository\VehicleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +38,20 @@ class VehicleController extends AbstractController
     public function new(Request $request): Response
     {
         $vehicle = new Vehicle();
-        $form = $this->createForm(VehicleType::class, $vehicle);
+        //$form = $this->createForm(VehicleType::class, $vehicle);
+        $form = $this->createFormBuilder($vehicle)
+            ->add('typeOfVehicle')
+            ->add('brand')
+            ->add('model')
+            ->add('serialNumber')
+            ->add('color')
+            ->add('numberplate')
+            ->add('kilometers')
+            ->add('dateOfPurchase')
+            ->add('buyingPrice')
+            ->add('picture', FileType::class, array('mapped' => false))
+            ->add('gallery')
+            ->getForm();
         $form->handleRequest($request);
         $vehicle->setCreatedBy($this->getUser()->getFirstname());
 

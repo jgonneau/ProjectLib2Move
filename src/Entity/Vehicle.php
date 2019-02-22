@@ -18,10 +18,6 @@ class Vehicle
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $typeOfVehicle;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -98,6 +94,11 @@ class Vehicle
      */
     private $gallery;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeOfVehicle", inversedBy="vehicle")
+     */
+    private $typeOfVehicle;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -109,17 +110,6 @@ class Vehicle
         return $this->id;
     }
 
-    public function getTypeOfVehicle(): ?string
-    {
-        return $this->typeOfVehicle;
-    }
-
-    public function setTypeOfVehicle(string $typeOfVehicle): self
-    {
-        $this->typeOfVehicle = $typeOfVehicle;
-
-        return $this;
-    }
 
     public function getBrand(): ?string
     {
@@ -316,6 +306,18 @@ class Vehicle
     public function setGallery(?string $gallery): self
     {
         $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getTypeOfVehicle(): ?TypeOfVehicle
+    {
+        return $this->typeOfVehicle;
+    }
+
+    public function setTypeOfVehicle(?TypeOfVehicle $typeOfVehicle): self
+    {
+        $this->typeOfVehicle = $typeOfVehicle;
 
         return $this;
     }
