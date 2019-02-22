@@ -1,4 +1,26 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+
+    {{ form_row(form.typeOfVehicle) }}
+    <div class="form-group">
+        <label class="" for="form_SubTypeOfVehicle">Sub Type of vehicle</label>
+        <select name="SubTypeOfVehicle" form="SubTypeOfVehicle" class="form-control">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="opel">Opel</option>
+            <option value="audi">Audi</option>
+        </select>
+    </div>
+    {{ form_row(form.brand) }}
+    {{ form_row(form.model) }}
+    {{ form_row(form.serialNumber) }}
+    {{ form_row(form.color) }}
+    {{ form_row(form.numberplate) }}
+    {{ form_row(form.kilometers) }}
+    {{ form_row(form.dateOfPurchase) }}
+    {{ form_row(form.buyingPrice) }}
+    {{ form_row(form.picture) }}
+    {{ form_row(form.gallery) }}
+
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
