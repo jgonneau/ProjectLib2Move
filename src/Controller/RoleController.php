@@ -5,24 +5,35 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Form\RoleType;
 use App\Repository\RoleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/role")
+ * @Route("/admin/dashboard/role")
  */
 class RoleController extends AbstractController
 {
+
     /**
      * @Route("/", name="role_index", methods={"GET"})
      */
     public function index(RoleRepository $roleRepository): Response
     {
-        return $this->render('role/index.html.twig', [
-            'roles' => $roleRepository->findAll(),
-        ]);
+        //L'on récupère tous les roles
+        $all_roles = $roleRepository->findAll();
+
+        //Redirection si l'utilisateur n'est pas admin.
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+            return $this->render('role/index.html.twig', [
+                'allroles' => $all_roles
+            ]);
+        }
+        return $this->redirectToRoute('home', ['error' => 'No admin!']);
     }
 
     /**
@@ -31,7 +42,12 @@ class RoleController extends AbstractController
     public function new(Request $request): Response
     {
         $role = new Role();
-        $form = $this->createForm(RoleType::class, $role);
+        //$form = $this->createForm(RoleType::class, $role);
+        $form = $this->createFormBuilder($role)
+            ->add('nomRole', TextType::class)
+            ->add('descriptionRole', TextType::class)
+            ->getForm();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

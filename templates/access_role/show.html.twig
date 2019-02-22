@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AccessRole{% endblock %}
+
+{% block body %}
+    <h1>AccessRole</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ access_role.id }}</td>
+            </tr>
+            <tr>
+                <th>AuthorizationEspace</th>
+                <td>{{ access_role.authorizationEspace }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionEspace</th>
+                <td>{{ access_role.descriptionEspace }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ access_role.createdAt ? access_role.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedBy</th>
+                <td>{{ access_role.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>ModifiedAt</th>
+                <td>{{ access_role.modifiedAt ? access_role.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ModifiedBy</th>
+                <td>{{ access_role.modifiedBy }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('access_role_index') }}">back to list</a>
+
+    <a href="{{ path('access_role_edit', {'id': access_role.id}) }}">edit</a>
+
+    {{ include('access_role/_delete_form.html.twig') }}
+{% endblock %}

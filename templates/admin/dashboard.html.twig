@@ -4,30 +4,39 @@
 
 {% block body %}
 
-<div class="adminInterface">
-    
-    <div class="nav nav-bar">
-    </div>
+                <h3>Users list</h3>
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Firstname</th>
+                        <th scope="col">Lastname</th>
+                        <th scope="col">Birthday</th>
+                        <th scope="col">N°Phone</th>
+                        <th scope="col">N°Licence</th>
+                        <th scope="col"></th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    {% for user in allusers %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.birthday |date("d/m/Y") }}</td>
+                        <td>{{ user.phoneNumber }}</td>
+                        <td>{{ user.licenceNumber }}</td>
+                        <th scope="row"></th>
+                        <td class="text-center">&</td>
+                        <td class="text-center">(X)</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <div class="d-flex justify-content-end mr-4">
+                
+                    <a class="text-white" href="{{ path('user_new') }}"><button class="btn btn-success pull-right">+ New user</button></a>
+                
+                </div>
 
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-sm-2 bg-dark text-light" style=" height:100vh;">
-
-                <h5> - Espace administration- ✅</h5>
-                <ul class="text-dark">
-                    <li><a href="{{ path('user_index') }}">Editer un utilisateur</a></li>
-                    <li><a href="{{ path('role_new') }}">Créer un nouveau rôle</a></li>
-                    <li><a href="">Modifier accès rôle</a></li>
-                </ul>
-                <p>Hello</p>
-            </div>
-            <div class="col-sm-auto">
-            </div>
-            <div class="col">
-                <p>test</p>
-            </div>
-        </div>
-    </div>
-
-</div>
 {% endblock %}

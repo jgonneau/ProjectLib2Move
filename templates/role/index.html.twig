@@ -1,41 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
-{% block title %}Role index{% endblock %}
+{% block title %}Dashboard Admin{% endblock %}
 
 {% block body %}
-    <h1>Role index</h1>
+    
+    <h3>Roles list</h3>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>NomRole</th>
                 <th>DescriptionRole</th>
-                <th>CreatedAt</th>
-                <th>ModifiedBy</th>
-                <th>ModifiedAt</th>
                 <th>CreatedBy</th>
-                <th>actions</th>
+                <th></th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-        {% for role in roles %}
+        {% for role in allroles %}
             <tr>
-                <td>{{ role.id }}</td>
                 <td>{{ role.nomRole }}</td>
                 <td>{{ role.descriptionRole }}</td>
-                <td>{{ role.createdAt ? role.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ role.modifiedBy }}</td>
-                <td>{{ role.modifiedAt ? role.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ role.createdBy }}</td>
-                <td>
-                    <a href="{{ path('role_show', {'id': role.id}) }}">show</a>
-                    <a href="{{ path('role_edit', {'id': role.id}) }}">edit</a>
-                </td>
+                <td></td>
+                <td><a href="{{ path('role_edit', {'id': role.id}) }}">&</a></td>
+                <td><a href="{{ path('role_delete', {'id': role.id}) }}">(X)</a></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">No records found</td>
             </tr>
         {% endfor %}
         </tbody>

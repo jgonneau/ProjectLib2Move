@@ -12,9 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 /**
- * @Route("/user")
+ * @Route("/admin/dashboard/users")
  */
 class UserController extends AbstractController
 {
@@ -23,9 +29,17 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+        //L'on récupère tous les utilisateurs
+        $all_users = $userRepository->findAll();
+
+        //Redirection si l'utilisateur n'est pas admin.
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+            return $this->render('admin/dashboard.html.twig', [
+                'allusers' => $all_users
+            ]);
+        }
+        return $this->redirectToRoute('home', ['error' => 'No admin!']);
     }
 
     /**
@@ -46,8 +60,22 @@ class UserController extends AbstractController
 
         $userRole->setUser($user);
 
+        /*
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $form->handleRequest($request);*/
+        //Creation formulaire pour ajouter nouvel utilisateur
+        //$user = new User();
+        $form = $this->createFormBuilder($user)
+            ->add('email', EmailType::class)
+            ->add('roles', IntegerType::class)
+            ->add('password', PasswordType::class)
+            ->add('firstname', TextType::class)
+            ->add('lastname', TextType::class)
+            ->add('birthday', BirthdayType::class)
+            ->add('phoneNumber', TextType::class)
+            ->add('licenceNumber', TextType::class)
+            ->add('document', TextType::class)
+            ->getForm();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $hash_password = $encoder->encodePassword($user, $user->getPassword());

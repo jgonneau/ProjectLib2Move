@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Lib2Move{% endblock %}</title>
         <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.css">
         {% block stylesheets %}{% endblock %}
         <style>
@@ -29,12 +29,12 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('home') }}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('home') }}">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" href="{{ path('home') }}">Logout <span class="sr-only">Logout</span></a>
+                    <a class="nav-link" href="{{ path('logout') }}">Logout <span class="sr-only">Logout</span></a>
                 </li>
             </ul>
         </div>
@@ -47,8 +47,38 @@
         {% endfor %}
     {% endfor %}
 
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="adminInterface">
+    
+    <div class="nav nav-bar">
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2 bg-dark text-light pt-3" style="height:100vh;">
+                <h5>-Administration-</h5>
+                <ul class="text-dark">
+                    <li><a href="{{ path('user_new') }}">Créer un utilisateur</a></li>                    
+                    <li><a href="{{ path('user_index') }}">Liste des utilisateurs</a></li>
+                    <li><a href="{{ path('role_new') }}">Créer un nouveau rôle</a></li>
+                    <li><a href="{{ path('role_index') }}">Liste des rôles</a></li>
+                    <li><a href="">Modifier accès rôles</a></li>
+                    
+                </ul>
+            </div>
+            <div class="col pt-3">
+                {% block body %}{% endblock %}        
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        {% block javascripts %}
+            <script
+			  src="http://code.jquery.com/jquery-1.12.4.min.js"
+			  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+			  crossorigin="anonymous"></script>
+        {% endblock %}
 
     <!--<footer class="navbar fixed-bottom ms-auto bg-primary"> @Lib2Move </footer>-->
     </body>

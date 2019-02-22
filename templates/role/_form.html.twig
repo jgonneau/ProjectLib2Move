@@ -1,4 +1,18 @@
+<div class="p-0">
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="row">
+    <div class="col-md-6">
+    {{ form_row(form.nomRole) }}
+    </div>
+    <div class="col-md-6"
+    {{ form_row(form.descriptionRole) }}
+    </div>
+
+    <div class="col-md-12 d-flex justify-content-end mr-4">
+    <button class="btn btn-secondary mr-2"> <a href="{{ path('role_index') }}">back to list</a></button>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}
+</div>
+
+

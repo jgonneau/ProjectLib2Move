@@ -1,4 +1,42 @@
+<div class="p-0">
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="row">
+    <div class="col-md-6">
+    {{ form_row(form.email) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.roles) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.password) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.firstname) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.lastname) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.birthday) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.phoneNumber) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.licenceNumber) }}
+    </div>
+    <div class="col-md-6">
+    {{ form_row(form.document) }}
+    </div>
+    <div class="col-md-6">
+    </div> 
+
+    <div class="col-md-12 d-flex justify-content-end mr-4">
+        <a href="{{ path('user_index') }}"><button class="btn btn-secondary mr-2">back to list</button></a>
+        <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+    </div>
+
+
+    </div>
 {{ form_end(form) }}
+</div>
