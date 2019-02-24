@@ -1,4 +1,4 @@
-# text agl Project
+# LIB2MOVE Project
 
 ###### Requirements :
 
