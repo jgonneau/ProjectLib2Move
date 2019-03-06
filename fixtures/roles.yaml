@@ -1,0 +1,6 @@
+App\Entity\Role:
+  ROLE_{ADMIN, USER, TEST}:
+    nomRole: <current()>
+    descriptionRole: <current()>
+    createdAt: <dateTimeAD('now')>
+    createdBy: 'faker'
