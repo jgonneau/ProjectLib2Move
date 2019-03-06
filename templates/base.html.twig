@@ -31,21 +31,29 @@
 
         <div class="collapse navbar-collapse" id="navbarColor01">
 
-            <ul class="navbar-nav mr-auto">
-                {% if app.user %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('user_show', {'id': app.user.id}) }}">Profil</a>
-                </li>
-                {% endif %}
-            </ul>
-            <ul class="navbar-nav navbar-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_new') }}"><i class="fas fa-user"></i>Account</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('logout') }}"><i class="fas fa-sign-in-alt"></i>Logout</a>
-                </li>
-            </ul>
+            {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                <ul class="navbar-nav mr-auto">
+                    {% if app.user %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('user_show', {'id': app.user.id}) }}">Profil</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_new') }}"><i class="fas fa-user"></i>Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}"><i class="fas fa-sign-in-alt"></i>Logout</a>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav ml-auto navbar-right">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('home') }}"><- Back</a>
+                    </li>
+                </ul>
+            {% endif %}
         </div>
     </nav>
     {% for label, messages in app.flashes %}
