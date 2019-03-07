@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\UserRole;
 use App\Form\LoginUserType;
 use App\Form\RegisterUserType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -14,14 +15,16 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/register", name="register")
      */
-    public function index()
+    public function index(Request $request, UserPasswordEncoderInterface $encoder)
     {
+
         $entityManager = $this->getDoctrine()->getManager();
         $user = new User();
         $userRole = new UserRole();
@@ -48,16 +51,30 @@ class SecurityController extends AbstractController
         }
 
         //Definition du formulaire
-        $form = $this->createFormBuilder($user)
+        /*$form = $this->createFormBuilder($user)
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('birthday', BirthdayType::class)
             ->add('phoneNumber', TextType::class)
-            ->getForm();
+            ->getForm();*/
 
-        $form = $this->createForm(RegisterUserType::class, $user);
+        $form = $this->createForm(RegisterUserType::class, $user);  
+        $form->handleRequest($request);      
+
+        if ($form->isSubmitted() && $form->isValid()) {
+                $hash_password = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($hash_password);
+                $user->setRoles(['ROLE_USER']);
+                $user->addUserRole($userRole);
+                $entityManager->persist($user);
+                $entityManager->flush();
+    
+                //redirection login... a revoir flash messages:
+                return $this->redirectToRoute('login');
+        }
+
 
         return $this->render('security/register.html.twig', [
             'form' => $form->createView()
@@ -71,6 +88,12 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
+        //Redirection si l'utilisateur est déjà connecté.
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            return $this->redirectToRoute('account');
+        }
+
         $user = new User();
 
         $form = $this->createForm(LoginUserType::class, $user);
