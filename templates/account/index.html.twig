@@ -8,20 +8,32 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+<nav style="position:fixed; height:200vh;" class="col-sm-1 ml-auto bg-success">
+    <li>
+        <ul>Test</ul>
+        <ul>Hello</ul>
+        <ul>6</ul>
+        <ul>UIKL</ul>
+        <ul>zzzzzz</ul>
+    </li>
+ </nav>
+
 <div class="container-fluid">
 
     <div class="row h-100 bg-warning pt-3">
-        <div class="col bg-info col-sm-1 ml-auto">
+        <div class="col col-sm-1 ml-auto fixed-left">
             
         </div>
         <div class="col">
             <h1 class="display-6">List vehicle to rent :</h1>
 
-                This friendly message is coming from:
-                <ul>
-                    <li>Your controller at <code><a href="{{ '/app/src/Controller/AccountController.php'|file_link(0) }}">src/Controller/AccountController.php</a></code></li>
-                    <li>Your template at <code><a href="{{ '/app/templates/account/index.html.twig'|file_link(0) }}">templates/account/index.html.twig</a></code></li>
-                </ul>
+            <div class="row justify-content-start ml-1">
+                {% for offer in offers %}
+                    <div style="background-color: purple; width: 100px; height: 100px; border: 8px; text-align:center; margin: 15px;">
+                        <p style="text-align: center">{{ offer.brand }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 

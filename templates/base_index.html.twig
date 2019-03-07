@@ -40,15 +40,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
                 </li>
-                {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_show', {'id': app.user.id}) }}">Profil</a>
-                </li>
-                {% endif %}
             </ul>
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_new') }}"><i class="fas fa-user-plus"></i>Register</a>
+                    <a class="nav-link" href="{{ path('register') }}"><i class="fas fa-user-plus"></i>Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('login') }}"><i class="fas fa-sign-in-alt"></i>Login</a>
