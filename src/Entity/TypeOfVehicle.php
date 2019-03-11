@@ -29,9 +29,14 @@ class TypeOfVehicle
     private $vehicle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SubTypeOfVehicle", mappedBy="typeOfVehicle")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $subTypeOfVehicles;
+    private $subType;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
     public function __construct()
     {
@@ -87,33 +92,26 @@ class TypeOfVehicle
         return $this;
     }
 
-    /**
-     * @return Collection|SubTypeOfVehicle[]
-     */
-    public function getSubTypeOfVehicles(): Collection
+    public function getSubType(): ?string
     {
-        return $this->subTypeOfVehicles;
+        return $this->subType;
     }
 
-    public function addSubTypeOfVehicle(SubTypeOfVehicle $subTypeOfVehicle): self
+    public function setSubType(?string $subType): self
     {
-        if (!$this->subTypeOfVehicles->contains($subTypeOfVehicle)) {
-            $this->subTypeOfVehicles[] = $subTypeOfVehicle;
-            $subTypeOfVehicle->setTypeOfVehicle($this);
-        }
+        $this->subType = $subType;
 
         return $this;
     }
 
-    public function removeSubTypeOfVehicle(SubTypeOfVehicle $subTypeOfVehicle): self
+    public function getDescription(): ?string
     {
-        if ($this->subTypeOfVehicles->contains($subTypeOfVehicle)) {
-            $this->subTypeOfVehicles->removeElement($subTypeOfVehicle);
-            // set the owning side to null (unless already changed)
-            if ($subTypeOfVehicle->getTypeOfVehicle() === $this) {
-                $subTypeOfVehicle->setTypeOfVehicle(null);
-            }
-        }
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

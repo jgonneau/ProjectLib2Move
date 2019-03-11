@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Router;
 
 /**
  * @Route("/access/role")
@@ -99,5 +100,34 @@ class AccessRoleController extends AbstractController
         }
 
         return $this->redirectToRoute('access_role_index');
+    }
+
+    private function generateAllAccessRoute(AccessRoleRepository $accessRoleRepository)
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var Router $router */
+        $router = $this->get('router');
+        $routes = $router->getRouteCollection()->all();
+        $all_route_path = [];
+
+        foreach ($routes as $route) {
+
+            $access = new AccessRole();
+            $routePath = $route->getPath();
+
+            $existingRoutePath = $accessRoleRepository->findBy([
+                'authorizationEspace' => $routePath
+            ]);
+
+            //dd($test[1]);
+            if( !preg_match('/_./', $routePath) && $existingRoutePath != null )
+            {
+                $access->setAuthorizationEspace($routePath);
+                $access->setCreatedAt(new \DateTime());
+                $em->persist($access);
+                $em->flush();
+                //array_push($all_route_path, $routePath);
+            }
+        }
     }
 }
