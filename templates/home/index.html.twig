@@ -1,6 +1,6 @@
 {% extends 'base_index.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Lib2Move{% endblock %}
 
 {% block body %}
     <div class="jumbotron">
@@ -9,8 +9,8 @@
         {% if (error != null) %}
             <p class="text-warning">{{ error }}</p>
         {% endif %}
-        {% if not app.user %}
-            <a href="{{ path('user_new') }}">Register</a><br>
+        {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+            <a href="{{ path('register') }}">Register</a><br>
             <a href="{{ path('login') }}">Login</a><br>
         {% else %}
         <a href="{{ path('admin') }}">admin</a><br>

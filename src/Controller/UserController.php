@@ -57,15 +57,31 @@ class UserController extends AbstractController
         $user = new User();
         $userRole = new UserRole();
 
+        //L'on définit le rôle USER par défaut pour les utilisateurs
         $roleName = 'ROLE_USER';
-        $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
-        $userRole->setRole($role);
 
-        $userRole->setUser($user);
+        //L'on recupere et verifie si le rôle existe déjà dans la base de données
+        $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
+        if ($role)
+        {
+            //L'on permet à utilisateur d'acceder au statut de ROLE_USER
+            $userRole->setRole($role);
+            $userRole->setUser($user);
+        }
+        else
+        {
+            //L'on crée le role USER si non existant dans la base de données
+            $entityManager->persist($userRole);
+            $entityManager->flush();
+
+            //L'on recupere et verifie en même temps que le role existe maintenant
+            $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
+        }
 
         /*
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);*/
+        $form->handleRequest($request);
         //Creation formulaire pour ajouter nouvel utilisateur
         //$user = new User();
         $form = $this->createFormBuilder($user)
@@ -86,7 +102,6 @@ class UserController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $user->addUserRole($userRole);
             $entityManager->persist($user);
-            $entityManager->persist($userRole);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');

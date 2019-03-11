@@ -1,0 +1,27 @@
+parameters:
+  model_array: ["Car","Scooter","Motorcyle"]
+
+App\Entity\Vehicle:
+  vehicle_{1..50}:
+    brand: <company()>
+    model: <randomElement($model_array)><bothify('????###')>
+    serial_number: <bothify('##########')>
+    color: <colorName()>
+    numberplate: <bothify('##?? ???##')>
+    kilometers: <randomNumber()>
+    dateOfPurchase: <dateTimeBetween('-100 years', '-10 years')>
+    buyingPrice: <numberBetween(1000, 9000)>
+    picture: https://via.placeholder.com/700x300.png?text=GEN+randomgraypicture
+    gallery: https://via.placeholder.com/700x300.png?text=GEN+randomgraypicture
+    createdAt: <dateTimeAD('now')>
+    createdBy: 'faker'
+
+#App\Entity\Offer:
+#  offer_{@vehicle_*}:
+#    vehicleId (unique): @vehicle_<current()>
+#    offerNumber: <numberBetween(1000000, 9999999)>
+#    offerPrice: <numberBetween(100, 1800)>
+#    startDate: dateTimeBetween('-3 months', 'now', 'Europe/Paris')
+#    endDate: dateTimeBetween('+2 weeks', 'now', 'Europe/Paris')
+#    createdAt: <dateTimeAD('now')>
+#    createdBy: 'faker'
