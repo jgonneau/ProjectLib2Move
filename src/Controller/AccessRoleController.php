@@ -20,48 +20,58 @@ class AccessRoleController extends AbstractController
     /**
      * @Route("/", name="access_role_index", methods={"GET"})
      */
-    public function index(AccessRoleRepository $accessRoleRepository): Response
+    public function index(AccessRoleRepository $accessRoleRepository, Request $request): Response
     {
-        ////Router $route
-        /*$router = $this->get('router');
-        $routes = $router->getRouteCollection();
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . $request->server->get('REQUEST_URI');
+
+        $testpathinfo = $request->server->get('REQUEST_URI');
+
+        //dd($request);
+        $rp = $request->attributes->get('_route_params');
+        $tt = [];
+        foreach ($rp as $keyi => $value)
+        {
+            $tt = $keyi . '--' . $value;
+            $testpathinfo = str_replace($value, "{".$keyi."}", $testpathinfo);
+        }
+        dd($testpathinfo, $tt);
+        dd($tt);
+        //dd($baseurl);
+        dd($request);
+
+        $this->generateAllAccessRoute($accessRoleRepository, $request);
+
+        /*$em = $this->getDoctrine()->getManager();
+        $router = $this->get('router');
+        $routes = $router->getRouteCollection()->all();
+        $all_route_path = [];
 
         foreach ($routes as $route) {
-            $this->convertController($route);
-        }*/
+
+            $access = new AccessRole();
+            $routePath = $route->getPath();
+
+            $existingRoutePath = $accessRoleRepository->findBy([
+                'authorizationEspace' => $routePath
+            ]);
+
+            //dd($test[1]);
+            if( !preg_match('/_./', $routePath) && $existingRoutePath == null )
+            {
+                /*$access->setAuthorizationEspace($routePath);
+                $access->setCreatedAt(new \DateTime());
+                $em->persist($access);
+                $em->flush();
+                array_push($all_route_path, $routePath);
+            }
+        }
+
+        dd($all_route_path);*/
 
         return $this->render('access_role/index.html.twig', [
             'access_roles' => $accessRoleRepository->findAll(),
         ]);
     }
-
-        /*
-public function routeAction()
-{
-     @var Router $router 
-    $router = $this->get('router');
-    $routes = $router->getRouteCollection();
-
-    foreach ($routes as $route) {
-        $this->convertController($route);
-    }
-
-    return [
-        'routes' => $routes
-    ];
-}*/
-
-
-/*private function convertController(Router $route)
-{
-    $nameParser = $this->get('controller_name_converter');
-    if ($route->hasDefault('_controller')) {
-        try {
-            $route->setDefault('_controller', $nameParser->build($route->getDefault('_controller')));
-        } catch (\InvalidArgumentException $e) {
-        }
-    }
-}*/
 
     /**
      * @Route("/new", name="access_role_new", methods={"GET","POST"})
@@ -138,32 +148,41 @@ public function routeAction()
         return $this->redirectToRoute('access_role_index');
     }
 
-    private function generateAllAccessRoute(AccessRoleRepository $accessRoleRepository)
+    private function generateAllAccessRoute(AccessRoleRepository $accessRoleRepository, Request $request)
     {
+        //Recupere l'entity manager
         $em = $this->getDoctrine()->getManager();
         /** @var Router $router */
+        
+        //Recupere l'instance router
         $router = $this->get('router');
+
+        //Recupere les routes
         $routes = $router->getRouteCollection()->all();
+        
+        //Tableau des routes, chemins
         $all_route_path = [];
+        
 
         foreach ($routes as $route) {
 
             $access = new AccessRole();
             $routePath = $route->getPath();
 
+            //Verification de l'existence de la route
             $existingRoutePath = $accessRoleRepository->findBy([
                 'authorizationEspace' => $routePath
             ]);
 
             //dd($test[1]);
-            if( !preg_match('/_./', $routePath) && $existingRoutePath != null )
-            {
-                $access->setAuthorizationEspace($routePath);
-                $access->setCreatedAt(new \DateTime());
-                $em->persist($access);
-                $em->flush();
-                //array_push($all_route_path, $routePath);
-            }
+            if (!preg_match('/_./', $routePath) && $existingRoutePath == null) {
+                    $access->setAuthorizationEspace($routePath);
+                    $access->setCreatedAt(new \DateTime());
+                    $access->setCreatedBy("_generated");
+                    $em->persist($access);
+                    $em->flush();
+                    //array_push($all_route_path, $routePath);
+                }
         }
     }
 }

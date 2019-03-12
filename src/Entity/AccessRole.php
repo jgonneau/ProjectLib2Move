@@ -99,12 +99,12 @@ class AccessRole
         return $this;
     }
 
-    public function getCreateBy(): ?string
+    public function getCreatedBy(): ?string
     {
         return $this->createdBy;
     }
 
-    public function setCreateBy(?string $createBy): self
+    public function setCreatedBy(?string $createBy): self
     {
         $this->createdBy = $createBy;
 
