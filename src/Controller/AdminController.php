@@ -18,6 +18,7 @@ class AdminController extends AbstractController
      */
     public function index()
     {
+
         //Redirection si l'utilisateur n'est pas admin.
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
         {

@@ -33,5 +33,16 @@
         </tbody>
     </table>
 
+    <!-- <h4>Routing:</h4>
+    <table>
+        % for route in routes %}
+            <tr>
+                <td>route.path }}</td>
+                <td>route.methods|length > 0 ? route.methods|join(', ') : 'ANY' }}</td>
+                <td>route.defaults._controller }}</td>
+            </tr>
+        % endfor %}
+    </table> -->
+
     <a href="{{ path('access_role_new') }}">Create new</a>
 {% endblock %}

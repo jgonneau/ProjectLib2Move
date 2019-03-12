@@ -4,23 +4,25 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\User;
-use App\Entity\UserRole;
 use App\Form\UserType;
+use App\Entity\UserRole;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin/dashboard/users")
+ * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends AbstractController
 {
@@ -29,6 +31,7 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         //L'on récupère tous les utilisateurs
         $all_users = $userRepository->findAll();
 
@@ -54,15 +57,31 @@ class UserController extends AbstractController
         $user = new User();
         $userRole = new UserRole();
 
+        //L'on définit le rôle USER par défaut pour les utilisateurs
         $roleName = 'ROLE_USER';
-        $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
-        $userRole->setRole($role);
 
-        $userRole->setUser($user);
+        //L'on recupere et verifie si le rôle existe déjà dans la base de données
+        $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
+        if ($role)
+        {
+            //L'on permet à utilisateur d'acceder au statut de ROLE_USER
+            $userRole->setRole($role);
+            $userRole->setUser($user);
+        }
+        else
+        {
+            //L'on crée le role USER si non existant dans la base de données
+            $entityManager->persist($userRole);
+            $entityManager->flush();
+
+            //L'on recupere et verifie en même temps que le role existe maintenant
+            $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
+        }
 
         /*
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);*/
+        $form->handleRequest($request);
         //Creation formulaire pour ajouter nouvel utilisateur
         //$user = new User();
         $form = $this->createFormBuilder($user)
@@ -83,7 +102,6 @@ class UserController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $user->addUserRole($userRole);
             $entityManager->persist($user);
-            $entityManager->persist($userRole);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_index');

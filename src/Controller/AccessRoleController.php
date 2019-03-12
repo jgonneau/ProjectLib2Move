@@ -22,10 +22,46 @@ class AccessRoleController extends AbstractController
      */
     public function index(AccessRoleRepository $accessRoleRepository): Response
     {
+        ////Router $route
+        /*$router = $this->get('router');
+        $routes = $router->getRouteCollection();
+
+        foreach ($routes as $route) {
+            $this->convertController($route);
+        }*/
+
         return $this->render('access_role/index.html.twig', [
             'access_roles' => $accessRoleRepository->findAll(),
         ]);
     }
+
+        /*
+public function routeAction()
+{
+     @var Router $router 
+    $router = $this->get('router');
+    $routes = $router->getRouteCollection();
+
+    foreach ($routes as $route) {
+        $this->convertController($route);
+    }
+
+    return [
+        'routes' => $routes
+    ];
+}*/
+
+
+/*private function convertController(Router $route)
+{
+    $nameParser = $this->get('controller_name_converter');
+    if ($route->hasDefault('_controller')) {
+        try {
+            $route->setDefault('_controller', $nameParser->build($route->getDefault('_controller')));
+        } catch (\InvalidArgumentException $e) {
+        }
+    }
+}*/
 
     /**
      * @Route("/new", name="access_role_new", methods={"GET","POST"})

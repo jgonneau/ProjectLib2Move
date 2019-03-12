@@ -52,6 +52,7 @@ class VehicleController extends AbstractController
             ->add('picture', FileType::class, array('mapped' => false))
             ->add('gallery')
             ->getForm();
+            
         $form->handleRequest($request);
         $vehicle->setCreatedBy($this->getUser()->getFirstname());
 
