@@ -49,9 +49,10 @@ class UserController extends AbstractController
      * @Route("/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
+     * @param \Swift_Mailer $mailer
      * @return Response
      */
-    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function new(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = new User();
@@ -78,10 +79,10 @@ class UserController extends AbstractController
             $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
         }
 
-        /*
+
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);*/
         $form->handleRequest($request);
+
         //Creation formulaire pour ajouter nouvel utilisateur
         //$user = new User();
         $form = $this->createFormBuilder($user)
@@ -106,6 +107,35 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('user_index');
         }
+
+
+        $message = (new \Swift_Message('Hello New Customer'))
+            ->setFrom('presleylupon@gmail.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                    'user/registration.html.twig',
+                    ['name' => $user->getFirstname()]
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    ['name' => $name]
+                ),
+                'text/plain'
+            )
+            */
+        ;
+
+        $mailer->send($message);
+
+
+
 
         return $this->render('user/new.html.twig', [
             'user' => $user,
