@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block title %}Vehicle index{% endblock %}
 
@@ -18,12 +18,6 @@
                 <th>Kilometers</th>
                 <th>DateOfPurchase</th>
                 <th>BuyingPrice</th>
-                <th>CreatedAt</th>
-                <th>CreatedBy</th>
-                <th>ModifiedAt</th>
-                <th>ModifiedBy</th>
-                <th>Picture</th>
-                <th>Gallery</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -40,12 +34,6 @@
                 <td>{{ vehicle.kilometers }}</td>
                 <td>{{ vehicle.dateOfPurchase ? vehicle.dateOfPurchase|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ vehicle.buyingPrice }}</td>
-                <td>{{ vehicle.createdAt ? vehicle.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ vehicle.createdBy }}</td>
-                <td>{{ vehicle.modifiedAt ? vehicle.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ vehicle.modifiedBy }}</td>
-                <td>{{ vehicle.picture }}</td>
-                <td>{{ vehicle.gallery }}</td>
                 <td>
                     <a href="{{ path('vehicle_show', {'id': vehicle.id}) }}">show</a>
                     <a href="{{ path('vehicle_edit', {'id': vehicle.id}) }}">edit</a>

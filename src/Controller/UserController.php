@@ -78,9 +78,8 @@ class UserController extends AbstractController
             $role = $entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
         }
 
-        /*
+
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);*/
         $form->handleRequest($request);
         //Creation formulaire pour ajouter nouvel utilisateur
         //$user = new User();

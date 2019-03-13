@@ -6,71 +6,58 @@
     <h1>Vehicle</h1>
 
     <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>TypeOfVehicle</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>SerialNumber</th>
+            <th>Color</th>
+            <th>Numberplate</th>
+            <th>Kilometers</th>
+            <th>DateOfPurchase</th>
+
+
+        </tr>
+
+        </thead>
         <tbody>
             <tr>
-                <th>Id</th>
                 <td>{{ vehicle.id }}</td>
             </tr>
             <tr>
-                <th>TypeOfVehicle</th>
+
                 <td>{{ vehicle.typeOfVehicle }}</td>
             </tr>
             <tr>
-                <th>Brand</th>
                 <td>{{ vehicle.brand }}</td>
             </tr>
             <tr>
-                <th>Model</th>
+
                 <td>{{ vehicle.model }}</td>
             </tr>
             <tr>
-                <th>SerialNumber</th>
+
                 <td>{{ vehicle.serialNumber }}</td>
             </tr>
             <tr>
-                <th>Color</th>
+
                 <td>{{ vehicle.color }}</td>
             </tr>
             <tr>
-                <th>Numberplate</th>
+
                 <td>{{ vehicle.numberplate }}</td>
             </tr>
             <tr>
-                <th>Kilometers</th>
+
                 <td>{{ vehicle.kilometers }}</td>
             </tr>
             <tr>
-                <th>DateOfPurchase</th>
+
                 <td>{{ vehicle.dateOfPurchase ? vehicle.dateOfPurchase|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-            <tr>
-                <th>BuyingPrice</th>
-                <td>{{ vehicle.buyingPrice }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ vehicle.createdAt ? vehicle.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedBy</th>
-                <td>{{ vehicle.createdBy }}</td>
-            </tr>
-            <tr>
-                <th>ModifiedAt</th>
-                <td>{{ vehicle.modifiedAt ? vehicle.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ModifiedBy</th>
-                <td>{{ vehicle.modifiedBy }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ vehicle.picture }}</td>
-            </tr>
-            <tr>
-                <th>Gallery</th>
-                <td>{{ vehicle.gallery }}</td>
-            </tr>
+
         </tbody>
     </table>
 
