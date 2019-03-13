@@ -1,74 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Lib2Move!{% endblock %}</title>
-        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        {% block stylesheets %}{% endblock %}
-        <style>
-            form {
-                margin: 30px;
-            }
-
-            h3, h5 {
-                margin-left: 20px;
-            }
-
-            footer {
-                opacity: 0.9;
-                z-index: 9999;
-            }
-        </style>
+        <meta charset="UTF-8" />
+        <title>Lib2Move - Accueil</title>
+        <link rel="stylesheet" href="css/bootstrap_cyborg.css" />
+        <script defer src="js/all.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     </head>
-    <body>
+    <body class="bg-white" style="padding-top: 70px; padding-bottom: 70px;">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="padding: 8px 8px !important">
-        <a class="navbar-brand" href="{{ path('home') }}">Lib2Move</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <header class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
+            <a href="index.html" class="navbar-brand">
+              <img src="images/Logo_Lib2Move" alt="Lib2Move">
+            </a>
 
-            {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav mr-auto">
-                    {% if app.user %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('user_show', {'id': app.user.id}) }}">Profil</a>
-                    </li>
-                    {% endif %}
+                  <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" id="dropdownbtn" data-toggle="dropdown">A propos</a>
+                      <ul class="dropdown-menu">
+                          <li class="dropdown-item"><a href="entreprise.html">Notre entreprise</a></li>
+                          <li class="dropdown-item"><a href="implantations.html">Nos implantations</a></li>
+                          <li class="dropdown-item"><a href="valeurs.html">Nos valeurs</a></li>
+                      </ul>
+                  </li>
+                  <li class="nav-item"><a href="vehicule.html" class="nav-link">Nos véhicules</a></li>
+                  <li class="nav-item"><a href="politique.html" class="nav-link">Notre politique clientèle</a></li>
                 </ul>
-                <ul class="navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('login') }}"><i class="fas fa-user"></i>Account</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('logout') }}"><i class="fas fa-sign-in-alt"></i>Logout</a>
-                    </li>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
                 </ul>
-            {% else %}
-                <ul class="navbar-nav ml-auto navbar-right">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('home') }}"><- Back</a>
-                    </li>
-                </ul>
-            {% endif %}
-        </div>
-    </nav>
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="flash-{{ label }} alert alert-dismissible alert-primary">
-                {{ message }}
             </div>
+
+        </header>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }} alert alert-dismissible alert-primary">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
 
-    <footer class="navbar fixed-bottom ms-auto bg-primary justify-content-center" style="padding: 5px 5px !important;">
-         <p class="text-white">@Lib2Move</p> 
-    </footer>
+        <footer class="navbar fixed-bottom ms-auto bg-primary justify-content-center" style="padding: 5px 5px !important;">
+             <p class="text-white">@Lib2Move</p> 
+        </footer>
+
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/bootstrap.bundle.js"></script>
     </body>
 </html>

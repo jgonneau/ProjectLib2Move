@@ -1,0 +1,44 @@
+{% extends 'base_index.html.twig' %}
+
+{% block title %}Accueil Lib2Move{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-3">Les véhicules</h1>
+        <p class="lead">Lib2Move propose à la location 3 véhicules : 
+des trottinettes, des scooters et des voitures.</p>
+        <hr class="my-4">
+        <p>Ces véhicules sont tous entièrement électriques.</p>
+    </div>
+    <section class="row">
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card text-white bg-lightgray">
+                <img src="images/Trottinette.jpeg" alt="CA" class="card-img-top">
+                <div class="card-body bg-secondary">
+                    <h4 class="card-title">Nos trottinettes</h4>
+                    <p class="card-text">Véhicule urbain par excellence, 
+la trottinette satisfait tous ceux qui cherchent un moyen simple de circuler en ville
+sans contrainte particulière.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card text-white bg-lightgray">
+                <img src="images/Scooter.jpg" alt="CA" class="card-img-top">
+                <div class="card-body bg-secondary">
+                    <h4 class="card-title">Nos scooters</h4>
+                    <p class="card-text">Le dynamisme de Lib2Move se ressent dans ses résultats financiers qui lui permettent de voir l'avenir avec sérénité.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 d-flex">
+            <div class="card text-white bg-lightgray">
+                <img src="images/Voiture.jpg" alt="CA" class="card-img-top">
+                <div class="card-body bg-secondary">
+                    <h4 class="card-title">Nos voitures</h4>
+                    <p class="card-text">Le dynamisme de Lib2Move se ressent dans ses résultats financiers qui lui permettent de voir l'avenir avec sérénité.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

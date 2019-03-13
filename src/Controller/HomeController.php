@@ -30,6 +30,47 @@ class HomeController extends AbstractController
     
     }
 
+
+    /**
+     * @Route("/vehicle_introducing", name="vehicle_introducing")
+     */
+    public function vehicle()
+    {
+        return $this->render('home/vehicle.html.twig', []);
+    }
+
+    /**
+     * @Route("/strategy_introducing", name="strategy_introducing")
+     */
+    public function strategy()
+    {
+        return $this->render('home/strategy.html.twig', []);
+    }
+
+    /**
+     * @Route("/principles", name="principles_introducing")
+     */
+    public function principles()
+    {
+        return $this->render('home/principles.html.twig', []);
+    }
+
+    /**
+     * @Route("/enterprise", name="enterprise_introducing")
+     */
+    public function enterprise()
+    {
+        return $this->render('home/enterprise.html.twig', []);
+    }
+
+    /**
+     * @Route("/locations", name="locations_introducing")
+     */
+    public function locations()
+    {
+        return $this->render('home/locations.html.twig', []);
+    }
+
     /**
      * @Route("/test", name="testt")
      */
