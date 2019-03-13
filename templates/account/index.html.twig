@@ -29,9 +29,9 @@
 
             <div class="row justify-content-center ml-1">
                 {% for offer in offers %}
-                    <div class="border border-primary rounded p-1" style="background-color: purple; width: 300px; border: 8px; text-align:center; margin: 15px; position:relative;">
+                    <div class="border border-primary rounded p-1 wow bounceInUp" style="background-color: purple; width: 300px; border: 8px; text-align:center; margin: 15px; position:relative;">
                         <p style="text-align: center">{{ offer.brand }}<br>
-                        <img src="https://via.placeholder.com/250x250.png?text=----" alt="offer_image"/>
+                        <img src="{{ offer.picture }}" alt="offer_image"/>
                         Duration: 5 days<br>
                         Price: //$
                         </p>
