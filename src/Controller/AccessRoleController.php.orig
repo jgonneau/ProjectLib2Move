@@ -18,10 +18,19 @@ use Symfony\Component\Routing\Router;
 class AccessRoleController extends AbstractController
 {
     /**
-     * @Route("/", name="access_role_index", methods={"GET"})
+     * @Route("/{owowo}/{bu}", name="access_role_index", methods={"GET"})
      */
     public function index(AccessRoleRepository $accessRoleRepository, Request $request): Response
     {
+<<<<<<< Updated upstream
+        ////Router $route
+        /*$router = $this->get('router');
+        $routes = $router->getRouteCollection();
+
+        foreach ($routes as $route) {
+            $this->convertController($route);
+        }*/
+=======
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . $request->server->get('REQUEST_URI');
 
         $testpathinfo = $request->server->get('REQUEST_URI');
@@ -34,10 +43,10 @@ class AccessRoleController extends AbstractController
             $tt = $keyi . '--' . $value;
             $testpathinfo = str_replace($value, "{".$keyi."}", $testpathinfo);
         }
-        //dd($testpathinfo, $tt);
-        //dd($tt);
+        dd($testpathinfo, $tt);
+        dd($tt);
         //dd($baseurl);
-        //dd($request);
+        dd($request);
 
         $this->generateAllAccessRoute($accessRoleRepository, $request);
 
@@ -67,11 +76,40 @@ class AccessRoleController extends AbstractController
         }
 
         dd($all_route_path);*/
+>>>>>>> Stashed changes
 
         return $this->render('access_role/index.html.twig', [
             'access_roles' => $accessRoleRepository->findAll(),
         ]);
     }
+
+        /*
+public function routeAction()
+{
+     @var Router $router 
+    $router = $this->get('router');
+    $routes = $router->getRouteCollection();
+
+    foreach ($routes as $route) {
+        $this->convertController($route);
+    }
+
+    return [
+        'routes' => $routes
+    ];
+}*/
+
+
+/*private function convertController(Router $route)
+{
+    $nameParser = $this->get('controller_name_converter');
+    if ($route->hasDefault('_controller')) {
+        try {
+            $route->setDefault('_controller', $nameParser->build($route->getDefault('_controller')));
+        } catch (\InvalidArgumentException $e) {
+        }
+    }
+}*/
 
     /**
      * @Route("/new", name="access_role_new", methods={"GET","POST"})
@@ -139,7 +177,7 @@ class AccessRoleController extends AbstractController
      */
     public function delete(Request $request, AccessRole $accessRole): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$accessRole->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $accessRole->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($accessRole);
             $entityManager->flush();
@@ -181,7 +219,6 @@ class AccessRoleController extends AbstractController
                     $access->setCreatedBy("_generated");
                     $em->persist($access);
                     $em->flush();
-                    
                     //array_push($all_route_path, $routePath);
                 }
         }

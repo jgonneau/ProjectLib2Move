@@ -47,6 +47,12 @@ class AccountController extends AbstractController
     {
         //L'on récupère les actuelles locations de l'utilisateur
         $actual_rents = $rentRepository->findAll();
+        /*if($actual_rents == [])
+        {
+            $actual_rents = null;
+        // dd($actual_rents);
+
+        }*/
 
         //Affichage de la vue
         return $this->render('account/actual_rents.html.twig', [

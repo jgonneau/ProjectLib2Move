@@ -58,6 +58,16 @@ class Role
      */
     private $userRole;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $levelRole;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $defaultPathRedirection;
+
 
 
     /**
@@ -203,6 +213,30 @@ class Role
                 $userRole->setRole(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLevelRole(): ?int
+    {
+        return $this->levelRole;
+    }
+
+    public function setLevelRole(int $levelRole): self
+    {
+        $this->levelRole = $levelRole;
+
+        return $this;
+    }
+
+    public function getDefaultPathRedirection(): ?string
+    {
+        return $this->defaultPathRedirection;
+    }
+
+    public function setDefaultPathRedirection(string $defaultPathRedirection): self
+    {
+        $this->defaultPathRedirection = $defaultPathRedirection;
 
         return $this;
     }

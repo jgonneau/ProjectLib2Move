@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\SubTypeOfVehicle;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
+use App\Service\AccessAuth;
+use App\Entity\SubTypeOfVehicle;
 use App\Repository\VehicleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 /**
  * @Route("/vehicle")
@@ -25,8 +28,15 @@ class VehicleController extends AbstractController
     /**
      * @Route("/", name="vehicle_index", methods={"GET"})
      */
-    public function index(VehicleRepository $vehicleRepository): Response
+    public function index(VehicleRepository $vehicleRepository, AccessAuth $AA, Request $request, EntityManagerInterface $entityManager) : Response
     {
+        //Verifie l'authorisation des droits d'accès de l'utilisateur courant
+        $redirection = $AA->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+
+        }
         return $this->render('vehicle/index.html.twig', [
             'vehicles' => $vehicleRepository->findAll(),
         ]);
