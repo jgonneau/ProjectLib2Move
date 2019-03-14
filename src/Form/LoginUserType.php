@@ -19,7 +19,7 @@ class LoginUserType extends AbstractType
             ->add('password',PasswordType::class, [
                 'label' => 'Mot de passe'
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [])
         ;
     }
 

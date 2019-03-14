@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Lib2Move - Accueil</title>
-        <link rel="stylesheet" href="css/bootstrap_cyborg.css" />
+        <link rel="stylesheet" href="/css/bootstrap_cyborg.css" />
         <script defer src="js/all.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     </head>
@@ -11,8 +11,8 @@
 
         <header class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-            <a href="index.html" class="navbar-brand">
-              <img src="images/Logo_Lib2Move.png" width=90px height=60px alt="Lib2Move">
+            <a href="{{ path('home') }}" class="navbar-brand">
+              <img src="/images/Logo_Lib2Move.png" width=90px height=60px alt="Lib2Move">
             </a>
 
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content">
@@ -24,16 +24,16 @@
                   <li class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" id="dropdownbtn" data-toggle="dropdown">A propos</a>
                       <ul class="dropdown-menu">
-                          <li class="dropdown-item"><a href="entreprise.html">Notre entreprise</a></li>
-                          <li class="dropdown-item"><a href="implantations.html">Nos implantations</a></li>
-                          <li class="dropdown-item"><a href="valeurs.html">Nos valeurs</a></li>
+                          <li class="dropdown-item"><a href="{{ path('enterprise_introducing') }}">Notre entreprise</a></li>
+                          <li class="dropdown-item"><a href="{{ path('locations_introducing') }}">Nos implantations</a></li>
+                          <li class="dropdown-item"><a href="{{ path('principles_introducing') }}">Nos valeurs</a></li>
                       </ul>
                   </li>
-                  <li class="nav-item"><a href="vehicule.html" class="nav-link">Nos véhicules</a></li>
-                  <li class="nav-item"><a href="politique.html" class="nav-link">Notre politique clientèle</a></li>
+                  <li class="nav-item"><a href="{{ path('vehicle_introducing') }}" class="nav-link">Nos véhicules</a></li>
+                  <li class="nav-item"><a href="{{ path('strategy_introducing')}}" class="nav-link">Notre politique clientèle</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+                    <li class="nav-item"><a href="{{ path('logout') }}" class="nav-link"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
                 </ul>
             </div>
 
@@ -51,8 +51,10 @@
             {% block body %}{% endblock %}
         </main>
 
-        <footer class="navbar fixed-bottom ms-auto bg-primary justify-content-center" style="padding: 5px 5px !important;">
-             <p class="text-white">@Lib2Move</p> 
+        <footer>
+            <div class="footer-copyright text-white text-center py-1 fixed-bottom" style="background-color: #000000">
+                <p>&copy; Copyright 2019 : Lib2Move.com</p>
+            </div>
         </footer>
 
         <script src="js/jquery-3.3.1.slim.min.js"></script>
