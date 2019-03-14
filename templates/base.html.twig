@@ -12,7 +12,7 @@
         <header class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
             <a href="index.html" class="navbar-brand">
-              <img src="images/Logo_Lib2Move" alt="Lib2Move">
+              <img src="images/Logo_Lib2Move.png" width=90px height=60px alt="Lib2Move">
             </a>
 
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content">
@@ -46,8 +46,10 @@
             {% endfor %}
         {% endfor %}
 
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        <main class="container-fluid my-5">
+            {% block body %}{% endblock %}
+        </main>
 
         <footer class="navbar fixed-bottom ms-auto bg-primary justify-content-center" style="padding: 5px 5px !important;">
              <p class="text-white">@Lib2Move</p> 

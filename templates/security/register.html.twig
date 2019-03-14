@@ -4,38 +4,45 @@
 
 {% block body %}
 
-    <div class="container mt-5">
+    <div class="jumbotron mt-5 bg-secondary">
         <div class="p-0">
+            <div>
+                <p>Pour pouvoir accéder aux fonctionnalités de 
+location de véhicule, créez un compte en renseignant les 
+informations ci-dessous.</p>
+                <p>Si vous avez déjà crée un compte, 
+rendez-vous directement sur la <a href="{{ path('login') }}">page de connexion.</a></p>
+            </div>
+            <hr style="background-color: #FFF">
             <div class="row">
                 <div class="col-md-12 text-dark">
-                    <h3>Registration :</h3>
+                    <h3>Création de compte :</h3>
                 </div>
             </div>
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-md-6">
-                {{ form_row(form.firstname) }}
+                <div class="col-md-6 text-white">
+                {{ form_row(form.firstname, {attr: {label: 'Prénom'}}) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 text-white">
                 {{ form_row(form.lastname) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 text-white">
                 {{ form_row(form.email) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 text-white">
                 {{ form_row(form.birthday) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 text-white">
                 {{ form_row(form.password) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 text-white">
                 {{ form_row(form.phoneNumber) }}
                 </div>
-                <div class="col-md-6">
-                </div> 
+                 
 
                 <div class="col-md-12 d-flex justify-content-end mr-4">
-                    <button class="btn btn-lg btn-secondary">{{ button_label|default('Register') }}</button>
+                    <button class="btn btn-lg btn-light">{{ button_label|default('S\'enregistrer') }}</button>
                 </div>
 
                 </div>

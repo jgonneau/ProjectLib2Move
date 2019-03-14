@@ -1,7 +1,32 @@
-
 {% extends 'base_index.html.twig' %}
- {% block body %}
-     {{ form_start(form) }}
-     {{ form_widget(form) }}
-     {{ form_end(form) }}
+
+{% block body %}
+<div class="jumbotron mt-5 bg-secondary">
+    <div class="p-0">
+        <div>
+            <p>Vous vous trouvez sur la page de connexion qui 
+vous permettra d'accéder à votre compte.</p>
+            <p>Si vous n'avez pas encore créé de compte, 
+veuillez le faire au préalable vous rendre sur la <a href="{{ path('register') }}">page d'enregistrement</a>.
+        </div>
+        <hr style="background-color: #FFF">
+        <div class="row">
+            <div class="col-md-12 text-dark">
+                <h3>Connexion :</h3>
+            </div>
+        </div>      
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6 text-white">
+                {{ form_row(form.email) }}
+            </div>
+            <div class="col-md-6 text-white">
+                {{ form_row(form.password) }}
+            </div>
+            <div class="col-md-12 d-flex justify-content-end mr-4">
+                <button class="btn btn-lg btn-light">{{ button_label|default('Se connecter') }}</button>
+            </div>
+        </div>
+    </div>
+</div>    
  {% endblock %}
