@@ -9,21 +9,25 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class CreateAdminCommand extends Command
 {
     protected static $defaultName = 'app:create-admin';
     private $entityManager;
     private $encoder;
+    private $router;
 
-    public function __construct(EntityManagerInterface $entityManager , UserPasswordEncoderInterface $encoder )
+    public function __construct(EntityManagerInterface $entityManager , UserPasswordEncoderInterface $encoder, RouterInterface $router)
     {
         $this->entityManager = $entityManager ;
         $this->encoder = $encoder ;
+        $this->router = $router;
         parent::__construct();
     }
 
@@ -51,13 +55,15 @@ class CreateAdminCommand extends Command
         //Initialisation administrateur
         $user = new User();
         $userRole = new UserRole();
-        $roleName = 'ROLE_ADMIN';
+        $roleName = 'ADMIN';
         $role = $this->entityManager->getRepository(Role::class)->findOneBy(['nomRole' => $roleName]);
 
         if(!$role){
 
             $role = new Role();
-            $role->setNomRole('ROLE_ADMIN');
+            $role->setNomRole('ADMIN');
+            $role->setLevelRole(3000);
+            $role->setDefaultPathRedirection('/admin');
 
         }
 
@@ -89,6 +95,61 @@ class CreateAdminCommand extends Command
         $this->entityManager->persist($userRole);
         $this->entityManager->persist($role);
         $this->entityManager->flush();
+
+
+        //Creation des accès administrateurs
+        //Recupere l'entity manager
+        //$em = $this->getDoctrine()->getManager();
+        /** var Router $router */
+        /*
+        //Recupere l'instance router
+        $router = $this->get('router');
+
+        //Recupere les routes
+        $routes = $router->getRouteCollection()->all();
+        
+        //Tableau des routes, chemins
+        $all_route_path = [];
+        
+
+        foreach ($routes as $route) {
+
+            $access = new AccessRole();
+            $routePath = $route->getPath();
+
+            //Verification de l'existence de la route
+            $existingRoutePath = $this->entityManager->getRepository(AccessRole::class)->findBy([
+                'authorizationEspace' => $routePath
+            ]);
+
+            if (!preg_match('/_./', $routePath) && $existingRoutePath == null) {
+                    $access->setAuthorizationEspace($routePath);
+                    $access->setCreatedAt(new \DateTime());
+                    $access->setCreatedBy("_generated");
+                    $this->entityManager->persist($access);
+                    $this->entityManager->flush();
+                    
+                    //array_push($all_route_path, $routePath);
+            }
+
+            if (preg_match('/.admin./', $routePath)) {
+
+                $role = $this->entityManager->getRepository(Role::class)->findOneBy(['nomRole' => 'ADMIN']);
+                $auth_path = $this->entityManager->getRepository(AccessRole::class)->findOneBy(['authorization_espace' => $routePath]);
+
+                //Verification d'accès url
+                $sql = 'INSERT INTO access_role_role 
+                (access_role_id, role_id) 
+                VALUES (:auth_path, :role_id);';
+
+                $conn = $this->entityManager->getConnection(); //$this-> //->getEntityManager()->getConnection();
+
+                $req_prep = $conn->prepare($sql);
+                $req_prep->execute(['auth_path' => $auth_path->getId(), 'role_id' => $role->getId() ]);
+            }
+
+
+        }*/
 
         $io->success( sprintf('Administrateur créé avec cette e-mail: %s', $email));
     }

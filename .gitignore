@@ -4,6 +4,10 @@
 /.vscode/
 /.env
 /*.orig
+/*BACKUP*
+/*BASE*
+/*LOCAL*
+/*REMOTE*
 /public/bundles/
 /docker/
 /var/

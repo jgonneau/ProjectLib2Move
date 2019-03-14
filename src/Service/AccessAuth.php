@@ -43,7 +43,7 @@ class AccessAuth extends AbstractController
         }
 
         //Verification d'accès url
-        $sql = 'SELECT authorization_espace
+        $sql = 'SELECT authorization_espace, nom_role
         FROM user_role ur
         LEFT JOIN user u ON ur.user_id = u.id
         LEFT JOIN role r ON r.id = ur.role_id
@@ -62,11 +62,13 @@ class AccessAuth extends AbstractController
 
         $is_authorized = $req_prep->fetchAll();
 
-
         $rt = 0;
-        if ($is_authorized && $request->server->get('REQUEST_URI') != "/")
+        if ($is_authorized)
         {
-            return '';
+            if ($request->server->get('REQUEST_URI') != "/")
+            {
+                return '';
+            }
         }
         //dd($rt, $ret, '---', $request->server->get('REQUEST_URI') );//, $ret[0]['default_path_redirection']);
         
@@ -75,8 +77,8 @@ class AccessAuth extends AbstractController
 
 
         ////
-        //Debut redirection
-        $sql = 'SELECT default_path_redirection 
+        //Debut redirection  
+        $sql = 'SELECT default_path_redirection, nom_role
         FROM user_role ur
         LEFT JOIN user u ON ur.user_id = u.id
         LEFT JOIN role r ON r.id = ur.role_id
@@ -90,7 +92,8 @@ class AccessAuth extends AbstractController
         // dd($stmt->fetchAll());
 
         $redirection = $req_prep->fetchAll();
-        if ($redirection)
+
+        if ($redirection && $redirection[0]['nom_role'] != "ADMIN")
         {
             //dd($redirection, $is_authorized != [], $request->server->get('REQUEST_URI'), $request->server->get('REQUEST_URI') != "/");
             //return ['path' => $ret['0']['default_path_redirection'], 'params' => ['id' => 10, 'test'=> 'ok!']];

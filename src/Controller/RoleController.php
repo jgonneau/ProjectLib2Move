@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Form\RoleType;
+use App\Service\AccessAuth;
 use App\Repository\RoleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,8 +23,14 @@ class RoleController extends AbstractController
     /**
      * @Route("/", name="role_index", methods={"GET"})
      */
-    public function index(RoleRepository $roleRepository): Response
+    public function index(RoleRepository $roleRepository, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) : Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         //L'on récupère tous les roles
         $all_roles = $roleRepository->findAll();
 
@@ -39,8 +47,14 @@ class RoleController extends AbstractController
     /**
      * @Route("/new", name="role_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) :Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+        
         $role = new Role();
         //$form = $this->createForm(RoleType::class, $role);
         $form = $this->createFormBuilder($role)
@@ -67,8 +81,14 @@ class RoleController extends AbstractController
     /**
      * @Route("/{id}", name="role_show", methods={"GET"})
      */
-    public function show(Role $role): Response
+    public function show(Role $role, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) : Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         return $this->render('role/show.html.twig', [
             'role' => $role,
         ]);
@@ -77,8 +97,14 @@ class RoleController extends AbstractController
     /**
      * @Route("/{id}/edit", name="role_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Role $role): Response
+    public function edit(Role $role, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) : Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         $form = $this->createForm(RoleType::class, $role);
         $form->handleRequest($request);
 
@@ -99,8 +125,14 @@ class RoleController extends AbstractController
     /**
      * @Route("/{id}", name="role_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Role $role): Response
+    public function delete(Role $role, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) : Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$role->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($role);

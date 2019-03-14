@@ -6,7 +6,9 @@ use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\UserRole;
+use App\Service\AccessAuth;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,8 +31,14 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+        
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         //L'on récupère tous les utilisateurs
         $all_users = $userRepository->findAll();
@@ -51,8 +59,14 @@ class UserController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
-    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function new(UserPasswordEncoderInterface $encoder, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $user = new User();
         $userRole = new UserRole();
@@ -115,8 +129,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function show(User $user, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -125,8 +145,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, AccessAuth $accessAuth, EntityManagerInterface $entityManager)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -147,8 +173,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(User $user, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);

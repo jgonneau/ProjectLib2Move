@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Service\AccessAuth;
 use App\Repository\RentRepository;
 use App\Repository\OfferRepository;
 use App\Repository\VehicleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +19,14 @@ class AccountController extends AbstractController
     /**
      * @Route("/", name="account")
      */
-    public function index(VehicleRepository $VR, Request $request)
+    public function index(VehicleRepository $VR, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         //NOTE: A remplacer VehiclRepo par OfferRepository ..
         //
         if ($request->query->get('search_by'))
@@ -43,8 +51,14 @@ class AccountController extends AbstractController
     /**
      * @Route("/myrents", name="rents_user")
      */
-    public function rentsUser(RentRepository $rentRepository)
+    public function rentsUser(RentRepository $rentRepository, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         //L'on récupère les actuelles locations de l'utilisateur
         $actual_rents = $rentRepository->findAll();
         /*if($actual_rents == [])
@@ -63,8 +77,14 @@ class AccountController extends AbstractController
     /**
      * @Route("/view_offer/{id}", name="view_offer")
      */
-    public function offerDetails(OfferRepository $offerRepository, $id = null)
+    public function offerDetails(OfferRepository $offerRepository, $id = null, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         //Si id de l'offre est inexistant ou bien non numérique, l'on redirige
         if (!$id || !is_numeric($id))
         {   
@@ -83,8 +103,14 @@ class AccountController extends AbstractController
     /**
      * @Route("/accept_offer/{id}", name="accept_offer")
      */
-    public function offerAccepted(OfferRepository $offerRepository, $id = null)
+    public function offerAccepted(OfferRepository $offerRepository, $id = null, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         ///////////////////
         //Affichage de la vue
         return $this->render('account/index.html.twig', [
@@ -95,8 +121,14 @@ class AccountController extends AbstractController
     /**
      * @Route("/revoke_offer/{id}", name="revoke_offer")
      */
-    public function offerRevoked(OfferRepository $offerRepository, $id = null)
+    public function offerRevoked(OfferRepository $offerRepository, $id = null, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+        
         ///////////////////
         //Affichage de la vue
         return $this->render('account/index.html.twig', [

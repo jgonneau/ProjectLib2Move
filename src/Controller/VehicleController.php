@@ -45,8 +45,14 @@ class VehicleController extends AbstractController
     /**
      * @Route("/new", name="vehicle_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) : Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         $vehicle = new Vehicle();
         //$form = $this->createForm(VehicleType::class, $vehicle);
         $form = $this->createFormBuilder($vehicle)
@@ -92,8 +98,14 @@ class VehicleController extends AbstractController
     /**
      * @Route("/{id}", name="vehicle_show", methods={"GET"})
      */
-    public function show(Vehicle $vehicle): Response
+    public function show(Vehicle $vehicle, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request) :Response
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         return $this->render('vehicle/show.html.twig', [
             'vehicle' => $vehicle,
         ]);
@@ -102,8 +114,14 @@ class VehicleController extends AbstractController
     /**
      * @Route("/{id}/edit", name="vehicle_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Vehicle $vehicle): Response
+    public function edit(Vehicle $vehicle, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         $form = $this->createForm(VehicleType::class, $vehicle);
         $form->handleRequest($request);
 
@@ -138,8 +156,14 @@ class VehicleController extends AbstractController
     /**
      * @Route("/{id}", name="vehicle_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Vehicle $vehicle): Response
+    public function delete(Vehicle $vehicle, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$vehicle->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($vehicle);

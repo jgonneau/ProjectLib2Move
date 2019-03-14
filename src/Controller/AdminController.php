@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\AccessAuth;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 //header("Access-Control-Allow-Origin: *");
 
@@ -16,8 +19,16 @@ class AdminController extends AbstractController
     /**
      * @Route("/", name="admin")
      */
-    public function index()
+    public function index(AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        return $this->redirectToRoute('admin_dashboard');
+
+        $redirection = $accessAuth->verif($request, $entityManager);
+        //dd($redirection);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
 
         //Redirection si l'utilisateur n'est pas admin.
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
@@ -32,8 +43,15 @@ class AdminController extends AbstractController
     /**
      * @Route("/dashboard", name="admin_dashboard")
      */
-    public function dashboard(UserRepository $userRepository)
+    public function dashboard(UserRepository $userRepository, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
+
         //L'on récupère tous les utilisateurs
         $all_users = $userRepository->findAll();
 
