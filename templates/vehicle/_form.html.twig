@@ -1,26 +1,52 @@
-{{ form_start(form) }}
+<div class="p-0">
+    {{ form_start(form) }}
+    <div class="row">
 
-
-    {{ form_row(form.typeOfVehicle) }}
-    <div class="form-group">
-        <label class="" for="form_SubTypeOfVehicle">Sub Type of vehicle</label>
-        <select name="SubTypeOfVehicle" form="SubTypeOfVehicle" class="form-control">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
-        </select>
+        <div class="col-md-6">
+            {{ form_row(form.typeOfVehicle) }}
+        </div>
+        <div class="form-group">
+            <label class="" for="form_SubTypeOfVehicle">Sub Type of vehicle</label>
+            <select name="SubTypeOfVehicle" form="SubTypeOfVehicle" class="form-control">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="opel">Opel</option>
+                <option value="audi">Audi</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.brand) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.model) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.serialNumber) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.color) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.numberplate) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.kilometers) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.dateOfPurchase) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.buyingPrice) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.picture) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.gallery) }}
+        </div>
+        <div class="col-md-12 d-flex justify-content-end mr-4">
+            <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+        </div>
     </div>
-    {{ form_row(form.brand) }}
-    {{ form_row(form.model) }}
-    {{ form_row(form.serialNumber) }}
-    {{ form_row(form.color) }}
-    {{ form_row(form.numberplate) }}
-    {{ form_row(form.kilometers) }}
-    {{ form_row(form.dateOfPurchase) }}
-    {{ form_row(form.buyingPrice) }}
-    {{ form_row(form.picture) }}
-    {{ form_row(form.gallery) }}
-
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    {{ form_end(form) }}
+</div>
