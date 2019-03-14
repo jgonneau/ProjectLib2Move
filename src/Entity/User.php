@@ -84,6 +84,11 @@ class User implements UserInterface
      */
     private $roles;
 
+    public function __toString()
+    {
+        return $this->getFirstname();
+    }
+
     public function __construct()
     {
         $this->userRoles = new ArrayCollection();

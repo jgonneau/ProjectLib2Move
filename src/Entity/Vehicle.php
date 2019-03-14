@@ -99,6 +99,11 @@ class Vehicle
      */
     private $typeOfVehicle;
 
+    public function __toString()
+    {
+        return $this->getModel();
+    }
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
