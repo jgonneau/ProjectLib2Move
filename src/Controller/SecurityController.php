@@ -21,8 +21,12 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/register", name="register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param \Swift_Mailer $mailer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder)
+    public function index(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer)
     {
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -70,6 +74,31 @@ class SecurityController extends AbstractController
                 $user->addUserRole($userRole);
                 $entityManager->persist($user);
                 $entityManager->flush();
+
+            $message = (new \Swift_Message('Hello New Customer'))
+                ->setFrom('contactlibtomove@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/registration.html.twig
+                        'user/registration.html.twig',
+                        ['name' => $user->getFirstname()]
+                    ),
+                    'text/html'
+                )
+                /*
+                 * If you also want to include a plaintext version of the message
+                ->addPart(
+                    $this->renderView(
+                        'emails/registration.txt.twig',
+                        ['name' => $name]
+                    ),
+                    'text/plain'
+                )
+                */
+            ;
+
+            $mailer->send($message);
     
                 //redirection login... a revoir flash messages:
                 return $this->redirectToRoute('login');

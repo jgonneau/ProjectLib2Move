@@ -105,34 +105,34 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $message = (new \Swift_Message('Hello New Customer'))
+                ->setFrom('contactlibtomove@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/registration.html.twig
+                        'user/registration.html.twig',
+                        ['name' => $user->getFirstname()]
+                    ),
+                    'text/html'
+                )
+                /*
+                 * If you also want to include a plaintext version of the message
+                ->addPart(
+                    $this->renderView(
+                        'emails/registration.txt.twig',
+                        ['name' => $name]
+                    ),
+                    'text/plain'
+                )
+                */
+            ;
+
+            $mailer->send($message);
+
             return $this->redirectToRoute('user_index');
         }
 
-
-        $message = (new \Swift_Message('Hello New Customer'))
-            ->setFrom('presleylupon@gmail.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView(
-                // templates/emails/registration.html.twig
-                    'user/registration.html.twig',
-                    ['name' => $user->getFirstname()]
-                ),
-                'text/html'
-            )
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    ['name' => $name]
-                ),
-                'text/plain'
-            )
-            */
-        ;
-
-        $mailer->send($message);
 
 
 
