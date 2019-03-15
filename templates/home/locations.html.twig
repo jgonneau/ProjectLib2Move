@@ -1,0 +1,32 @@
+{% extends 'base_index.html.twig' %}
+
+{% block title %}Nos implantations{% endblock %}
+
+{% block body %}
+<section class="row my-4">
+    <div class="col-12 col-lg-6 d-flex">
+        <div class="card text-white bg-lightgray">
+            <img src="images/Paris.jpg" alt="CA" class="card-img-top">
+            <div class="card-body bg-secondary">
+                <h4 class="card-title">Notre siège social</h4>
+                <p class="card-text">Basé à Paris, il s'agit de l'implantation historique du groupe. C'est là qu'oeuvre la Direction de Lib2Move, accompagnée de toutes les fonctions supports.</p>
+                <hr>
+                <p class="card-text">40 employés y travaillent quotidiennement.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 d-flex">
+        <div class="card text-white bg-lightgray">
+            <img src="images/Lyon.jpg" alt="CA" class="card-img-top">
+            <div class="card-body bg-secondary">
+                <h4 class="card-title">Notre nouvelle succursale</h4>
+                <p class="card-text">Situé à proximité de l'aéroport de 
+Lyon-Saint-Exupéry, cette succursale a tout pour réussir. La demande en location de véhicules y est l'une des fortes en France.</p>
+                <hr>
+                <p class="card-text">10 employés sont chargés du bon fonctionnement de cette 
+succursale.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

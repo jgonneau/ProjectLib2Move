@@ -1,0 +1,142 @@
+{% extends 'base_index.html.twig' %}
+
+{% block title %}Notre politique clientèle{% endblock %}
+
+{% block body %}
+<div class="jumbotron col-12 text-center">
+    <h1 class="display-3">Notre politique clientèle</h1>
+    <h2 class="h3">Une relation essentiellement basée sur la fidélisation</h2>
+    <p class="lead">A Lib2Move, nous tenons à ce que la fidélité de nos 
+clients soit récompensée. C'est pourquoi nous avons mis en place un système de points 
+qui leur permet d'obtenir de réels avantages.</p>
+    <hr class="my-4" style="background-color: #FFF">
+    <div class="row">
+        <div class="col-12 col-lg-5">
+            <p>La location de véhicule permet de réunir des 
+points fidélité. Le nombre de points acquis est fonction du véhicule loué et de son 
+type.</p>
+            <table class="table table-bordered table-striped table-gray text-center">
+                <caption>Acquisition de pts fidélité</caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">
+                            Catégorie
+                        </th>
+                        <th scope="col">
+                            Véhicule
+                        </th>
+                        <th scope="col">
+                            Type
+                        </th>
+                        <th scope="col">
+                            Pts fidélité
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-white">
+                    <tr>
+                        <td>1</td>
+                        <td colspan="2">Trottinette électrique</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Scooter</td>
+                        <td>50cc</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Scooter</td>
+                        <td>125cc</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Voiture</td>
+                        <td>Citadine</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Scooter</td>
+                        <td>250cc et +</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Voiture</td>
+                        <td>Berline Compacte</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Voiture</td>
+                        <td>Berline Intermédiaire</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Voiture</td>
+                        <td>Utilitaire</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Voiture</td>
+                        <td>Familiale/Monospace</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Voiture</td>
+                        <td>Cabriolet/Coupé/Sport</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Voiture</td>
+                        <td>4x4/SUV</td>
+                        <td>100</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>    
+        <div class="col-12 col-lg-5 offset-lg-2">                    
+            <p>Aux points fidélités sont associés des avantages non 
+négligeables, présentés dans le tableau ci-dessous.</p>    
+            <table class="table table-bordered table-striped table-gray text-center">
+                <caption>Valorisation de pts fidélité</caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">
+                            Nbre points fidélité
+                        </th>
+                        <th scope="col">
+                            Avantage associé
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-white">
+                    <tr>
+                        <td>200</td>
+                        <td>1 location gratuite d'un véhicule de catégorie 1</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>1 location gratuite d'un véhicule de catégorie 2</td>
+                    </tr>
+                    <tr>
+                        <td>750</td>
+                        <td>1 location gratuite d'un véhicule de catégorie 3</td>
+                    </tr>
+                    <tr>
+                        <td>1200</td>
+                        <td>1 location gratuite d'un véhicule de catégorie 4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
