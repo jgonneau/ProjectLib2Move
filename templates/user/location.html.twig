@@ -1,0 +1,12 @@
+{# templates/emails/registration.html.twig #}
+<h3>Location</h3>
+
+Hi {{ name }}! You're successfully registered your rent .
+
+{# example, assuming you have a route named "login" #}
+<p> {{ rent.offer.vehicle.model }}</p>
+
+Thanks!
+
+{# Makes an absolute URL to the /images/logo.png file #}
+<img src="{{ absolute_url(asset('images/logo.png')) }}">

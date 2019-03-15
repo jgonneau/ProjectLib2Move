@@ -95,7 +95,7 @@ class UserController extends AbstractController
 
 
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);*/
+        $form->handleRequest($request);
         $form->handleRequest($request);
 
         //Creation formulaire pour ajouter nouvel utilisateur

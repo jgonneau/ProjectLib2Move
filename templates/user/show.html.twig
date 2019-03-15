@@ -6,46 +6,43 @@
     <h1>User</h1>
 
     <table class="table">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Birthday</th>
+            <th>PhoneNumber</th>
+            <th>LicenceNumber</th>
+            <th>Email</th>
+        </tr>
+
+        </thead>
         <tbody>
+
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
+
                 <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
+
+
                 <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Birthday</th>
+
+
                 <td>{{ user.birthday ? user.birthday|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>PhoneNumber</th>
+
+
                 <td>{{ user.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>LicenceNumber</th>
+
+
                 <td>{{ user.licenceNumber }}</td>
-            </tr>
-            <tr>
-                <th>Document</th>
-                <td>{{ user.document }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
+
+
                 <td>{{ user.email }}</td>
             </tr>
         </tbody>
     </table>
 
+    {% if user.rents %}
+    <h2 style="color: black;"> Vos Location</h2>
     <div>
         {% for rent in user.rents %}
         <p>
@@ -56,6 +53,7 @@
         </p>
         {% endfor %}
     </div>
+    {% endif %}
 
     <a href="{{ path('user_index') }}">back to list</a>
 
