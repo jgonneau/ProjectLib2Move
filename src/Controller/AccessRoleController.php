@@ -30,22 +30,6 @@ class AccessRoleController extends AbstractController
             return $this->redirect($redirection);
         }
 
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . $request->server->get('REQUEST_URI');
-
-        $testpathinfo = $request->server->get('REQUEST_URI');
-
-        //dd($request);
-        $rp = $request->attributes->get('_route_params');
-        $tt = [];
-        foreach ($rp as $keyi => $value)
-        {
-            $tt = $keyi . '--' . $value;
-            $testpathinfo = str_replace($value, "%", $testpathinfo); ///"{".$keyi."}", $testpathinfo);
-            
-            array_push($tt, $testpathinfo);
-        }
-        dd($rp);
-
         //Permet de regenerer toutes les routes permettant les accès dans la database
         $this->generateAllAccessRoute($accessRoleRepository, $request);
 
@@ -94,6 +78,7 @@ class AccessRoleController extends AbstractController
      */
     public function show(AccessRole $accessRole, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
+
         $redirection = $accessAuth->verif($request, $entityManager);
         if($redirection)
         {
@@ -153,7 +138,7 @@ class AccessRoleController extends AbstractController
         return $this->redirectToRoute('access_role_index');
     }
 
-    private function generateAllAccessRoute(AccessRoleRepository $accessRoleRepository, Request $request)
+    private function generateAllAccessRoute(AccessRoleRepository $accessRoleRepository, RoleRepository $roleRepository, Request $request)
     {
         //Recupere l'entity manager
         $em = $this->getDoctrine()->getManager();
@@ -190,7 +175,7 @@ class AccessRoleController extends AbstractController
                     $access->setCreatedBy("_generated");
                     $em->persist($access);
                     $em->flush();
-                }
+            }
         }
     }
 }
