@@ -75,7 +75,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/view_offer/{id}", name="view_offer")
+     * @Route("/viewOffer/{id}", name="view_offer")
      */
     public function offerDetails(OfferRepository $offerRepository, $id = null, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
@@ -101,7 +101,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/accept_offer/{id}", name="accept_offer")
+     * @Route("/acceptOffer/{id}", name="accept_offer")
      */
     public function offerAccepted(OfferRepository $offerRepository, $id = null, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {

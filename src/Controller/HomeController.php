@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     {
         //Redirection si non autorisation d'accès
         $redirection = $accessAuth->verif($request, $entityManager);
-        if ($redirection)
+        if ($redirection && $this->getUser())
         {
             return $this->redirect($redirection);
         }

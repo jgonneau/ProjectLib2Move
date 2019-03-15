@@ -40,41 +40,14 @@ class AccessRoleController extends AbstractController
         foreach ($rp as $keyi => $value)
         {
             $tt = $keyi . '--' . $value;
-            $testpathinfo = str_replace($value, "{".$keyi."}", $testpathinfo);
+            $testpathinfo = str_replace($value, "%", $testpathinfo); ///"{".$keyi."}", $testpathinfo);
+            
+            array_push($tt, $testpathinfo);
         }
-        //dd($testpathinfo, $tt);
-        //dd($tt);
-        //dd($baseurl);
-        //dd($request);
+        dd($rp);
 
+        //Permet de regenerer toutes les routes permettant les accès dans la database
         $this->generateAllAccessRoute($accessRoleRepository, $request);
-
-        /*$em = $this->getDoctrine()->getManager();
-        $router = $this->get('router');
-        $routes = $router->getRouteCollection()->all();
-        $all_route_path = [];
-
-        foreach ($routes as $route) {
-
-            $access = new AccessRole();
-            $routePath = $route->getPath();
-
-            $existingRoutePath = $accessRoleRepository->findBy([
-                'authorizationEspace' => $routePath
-            ]);
-
-            //dd($test[1]);
-            if( !preg_match('/_./', $routePath) && $existingRoutePath == null )
-            {
-                /*$access->setAuthorizationEspace($routePath);
-                $access->setCreatedAt(new \DateTime());
-                $em->persist($access);
-                $em->flush();
-                array_push($all_route_path, $routePath);
-            }
-        }
-
-        dd($all_route_path);*/
 
         return $this->render('access_role/index.html.twig', [
             'access_roles' => $accessRoleRepository->findAll(),
@@ -208,13 +181,15 @@ class AccessRoleController extends AbstractController
 
             //dd($test[1]);
             if (!preg_match('/_./', $routePath) && $existingRoutePath == null) {
+                    
+                    //Remplacer les {id} par % pour checker n'importe laquelle de valeur
+                    $routePath = str_replace("{id}", "%", $routePath);
+                    
                     $access->setAuthorizationEspace($routePath);
                     $access->setCreatedAt(new \DateTime());
                     $access->setCreatedBy("_generated");
                     $em->persist($access);
                     $em->flush();
-                    
-                    //array_push($all_route_path, $routePath);
                 }
         }
     }

@@ -13,18 +13,18 @@ class AccessAuth extends AbstractController
     {
         if (!$this->getUser())
         {
-            return '';
+            return '/';
         }
 
-        //Requete pour verification d'accès url
-        $sql = 'SELECT authorization_espace, nom_role
+        //Requete pour verification d'accès url    authorization_espace, nom_role
+        $sql = 'SELECT *
         FROM user_role ur
         LEFT JOIN user u ON ur.user_id = u.id
         LEFT JOIN role r ON r.id = ur.role_id
         LEFT JOIN access_role_role arr ON arr.role_id = r.id
         LEFT JOIN access_role ar ON ar.id = arr.access_role_id
         WHERE u.id = :user_id
-        AND ar.authorization_espace = :espace
+        AND :espace LIKE ar.authorization_espace
         ORDER BY r.level_role DESC
         LIMIT 1';
 
