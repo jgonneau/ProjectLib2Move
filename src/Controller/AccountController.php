@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Service\AccessAuth;
 use App\Repository\RentRepository;
 use App\Repository\OfferRepository;
@@ -19,7 +20,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/", name="account")
      */
-    public function index(VehicleRepository $VR, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
+    public function index(OfferRepository $VR, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
     {
         $redirection = $accessAuth->verif($request, $entityManager);
         if($redirection)
@@ -94,9 +95,13 @@ class AccountController extends AbstractController
         //L'on récupère l'offre que l'utilisateur veut voir
         $offer_details = $offerRepository->find($id);
 
+        $duration = $offer_details->getStartDate()->diff($offer_details->getEndDate());
+
+
         //Affichage de la vue
         return $this->render('account/offer_view.html.twig', [
-            'offer' => $offer_details
+            'offer' => $offer_details,
+            'duration' => $duration->format('%R%a journé')
         ]);
     }
 
@@ -133,6 +138,22 @@ class AccountController extends AbstractController
         //Affichage de la vue
         return $this->render('account/index.html.twig', [
             'offers' => ''
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="user_view", methods={"GET"})
+     */
+    public function show(User $user, AccessAuth $accessAuth, EntityManagerInterface $entityManager, Request $request)
+    {
+        $redirection = $accessAuth->verif($request, $entityManager);
+        if($redirection)
+        {
+            return $this->redirect($redirection);
+        }
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
         ]);
     }
 }

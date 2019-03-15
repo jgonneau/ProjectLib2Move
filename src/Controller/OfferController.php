@@ -31,6 +31,8 @@ class OfferController extends AbstractController
     public function new(Request $request): Response
     {
         $offer = new Offer();
+        $offer->setCreatedBy('Admin');
+        $offer->setCreationDate(new \DateTime());
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 

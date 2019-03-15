@@ -17,7 +17,6 @@ class OfferType extends AbstractType
             ->add('startDate')
             ->add('endDate')
             ->add('vehicle')
-            ->add('user')
         ;
     }
 
