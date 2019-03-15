@@ -28,6 +28,20 @@
             <h1 class="display-6">List vehicle to rent :</h1>
 
             <div class="row justify-content-center ml-1">
+<<<<<<< HEAD
+                    {% for rent in rents %}
+                        <div class="corned p-1" style="background-color: purple; width: 300px; border: 8px; text-align:center; margin: 15px; position:relative;">
+                            <p style="text-align: center">{{ rent.id }}<br>
+                            <img src="https://via.placeholder.com/250x250.png?text=----" alt="offer_image"/>
+                            Duration: 5 days<br>
+                            Price: //$
+                            </p>
+                            <a href="{{ path('view_offer', {'id': offer.id }) }}"><button style="">View this offer</button></a>
+                        </div>
+                    {% else %}
+                        <p style="color: black">Il n'existe aucun historique.</p>
+                    {% endfor %}
+=======
                 {% for offer in offers %}
                     <div class="corned p-1" style="background-color: purple; width: 300px; border: 8px; text-align:center; margin: 15px; position:relative;">
                         <p style="text-align: center">{{ offer.brand }}<br>
@@ -38,6 +52,7 @@
                         <a href="{{ path('view_offer', {'id': offer.id }) }}"><button style="">View this offer</button></a>
                     </div>
                 {% endfor %}
+>>>>>>> origin/miseenforme-front
             </div>
         </div>
     </div>

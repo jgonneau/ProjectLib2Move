@@ -50,11 +50,12 @@ class AccessAuth extends AbstractController
         ////
         //Debut redirection  
 
-        //Requete pour verification d'accès url
-        $sql = 'SELECT default_path_redirection, nom_role
+        //Requete pour verification d'accès url  default_path_redirection, nom_role
+        $sql = 'SELECT *
         FROM user_role ur
         LEFT JOIN user u ON ur.user_id = u.id
         LEFT JOIN role r ON r.id = ur.role_id
+        WHERE u.id = :user_id
         ORDER BY r.level_role DESC
         LIMIT 1';
 
