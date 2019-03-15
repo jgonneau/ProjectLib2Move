@@ -46,6 +46,17 @@
         </tbody>
     </table>
 
+    <div>
+        {% for rent in user.rents %}
+        <p>
+            {{ rent.offer.vehicle.brand }}
+            {{ rent.offer.vehicle.model }}
+            {{ rent.statut }}
+
+        </p>
+        {% endfor %}
+    </div>
+
     <a href="{{ path('user_index') }}">back to list</a>
 
     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>

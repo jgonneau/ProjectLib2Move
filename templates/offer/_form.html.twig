@@ -16,11 +16,10 @@
         <div class="col-md-6">
             {{ form_row(form.vehicle) }}
         </div>
-        <div class="col-md-6">
-            {{ form_row(form.user) }}
-        </div>
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
+        <div class="col-md-12 d-flex justify-content-end mr-4">
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+        </div>
     </div>
 {{ form_end(form) }}
 </div>

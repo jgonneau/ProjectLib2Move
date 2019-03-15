@@ -27,22 +27,30 @@
         <div class="col">
             <h1 class="display-6">Offer details :</h1>
 
-            <div class="row justify-content-center ml-1">
+            <div class="row col-12 col-md-8 justify-content-center ml-1">
 
                 {% if offer is not null %}
-                <p>Offer number : {{ offer.offerNumber }} | ({{ offer.creationDate }})</p>
-                <p>Offer vehicle : {{ offer.vehicleId }}</p>
-                <p>Offer description : --- </p>
+                <p>Offer number : {{ offer.offerNumber }} </p><br>
+                <p>Offer vehicle : {{ offer.vehicle.Id }}</p><br>
+                <p>description : cette offre a une durée de {{ duration }} de location nombre de kilomètre ilimité</p>
 
                 <br><br>
                 <!-- <button>Revoke offer</button> -->
                 
                 {% endif %}
 
+                <p>Marque du Vehicule : {{ offer.vehicle.brand }}</p><br>
+                <p>Model du Vehicule : {{ offer.vehicle.model }}</p><br>
             </div>
+
+        </div>
+
+        <div class="card col-12 col-md-4 justify-content-center">
+            <img src="/uploads/{{ offer.vehicle.picture }}" alt="offer_image" />
         </div>
     </div>
 
+    <a href="{{ path('rentOffer', {'id': offer.id }) }}"><button style="">loué</button></a>
     
 </div>
 {% endblock %}
