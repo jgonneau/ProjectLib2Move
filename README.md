@@ -26,8 +26,14 @@ Before to get any user, admins have to give access to routes of users in the adm
 
 Create an admin by php bin/console with :
 ````
-commande            params
+command             params
 app:create-admin    (pseudo) (email) (password)
+````
+
+[DevMode] Create all fixtures :
+````
+command
+app/console hautelook:fixtures:load 
 ````
 
 Access to the database at :
